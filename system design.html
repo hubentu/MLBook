@@ -1,0 +1,737 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>System Design for Machine Learning Models &#8212; Machine Learning Notebook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'system design';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Mixed Precision Training and Quantization" href="Mixed%20Precision%20and%20Quantization.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/mlb.png" class="logo__image only-light" alt="Machine Learning Notebook - Home"/>
+    <script>document.write(`<img src="_static/mlb.png" class="logo__image only-dark" alt="Machine Learning Notebook - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Machine Learning notebook
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Core%20ML%20concepts.html">Core Machine Learning Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Model%20Optimization.html">Model Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mixed%20Precision%20and%20Quantization.html">Mixed Precision Training and Quantization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">System Design for Machine Learning Models</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsystem design.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/system design.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>System Design for Machine Learning Models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-development-and-training-pipeline"><strong>1. Model Development and Training Pipeline</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-components"><strong>Key Components:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#design-considerations"><strong>Design Considerations:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-training-pipeline-design"><strong>Example: Training Pipeline Design</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#serving-and-inference-infrastructure"><strong>2. Serving and Inference Infrastructure</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Key Components:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-serving-platforms"><strong>Model Serving Platforms:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>Design Considerations:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-real-time-inference-architecture"><strong>Example: Real-Time Inference Architecture</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-and-continuous-learning"><strong>3. Monitoring and Continuous Learning</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>Key Components:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>Design Considerations:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-considerations"><strong>4. Scaling Considerations</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>Key Components:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-management-and-feature-engineering"><strong>5. Data Management and Feature Engineering</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>Key Components:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><strong>Design Considerations:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-versioning-and-a-b-testing"><strong>6. Model Versioning and A/B Testing</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><strong>Key Components:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><strong>Design Considerations:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-end-to-end-system-architecture"><strong>Example End-to-End System Architecture</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="system-design-for-machine-learning-models">
+<h1>System Design for Machine Learning Models<a class="headerlink" href="#system-design-for-machine-learning-models" title="Link to this heading">#</a></h1>
+<p>System design is a critical aspect of deploying machine learning models at scale. In this section, we’ll cover key concepts and steps involved in designing a robust system for machine learning models that can handle large-scale data, high throughput, low-latency predictions, and continuous learning.</p>
+<p>Let’s walk through the stages of <strong>end-to-end machine learning system design</strong>, focusing on the following areas:</p>
+<ol class="arabic simple">
+<li><p><strong>Model Development and Training Pipeline</strong></p></li>
+<li><p><strong>Serving and Inference Infrastructure</strong></p></li>
+<li><p><strong>Monitoring and Continuous Learning</strong></p></li>
+<li><p><strong>Scaling Considerations</strong></p></li>
+<li><p><strong>Data Management and Feature Engineering</strong></p></li>
+<li><p><strong>Model Versioning and A/B Testing</strong></p></li>
+</ol>
+<hr class="docutils" />
+<section id="model-development-and-training-pipeline">
+<h2><strong>1. Model Development and Training Pipeline</strong><a class="headerlink" href="#model-development-and-training-pipeline" title="Link to this heading">#</a></h2>
+<p>The training pipeline is the foundation of any ML system, responsible for developing and refining models.</p>
+<section id="key-components">
+<h3><strong>Key Components:</strong><a class="headerlink" href="#key-components" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Data Ingestion and Preprocessing</strong>: This includes collecting and processing data from multiple sources, cleaning it, and transforming it into features. Often, this step is automated.</p></li>
+<li><p><strong>Feature Engineering</strong>: Building informative features from raw data to enhance model performance.</p></li>
+<li><p><strong>Model Training</strong>: The core process where the machine learning model learns from the data.</p></li>
+<li><p><strong>Hyperparameter Tuning</strong>: Automatic search (e.g., Grid Search, Random Search, Bayesian Optimization) for the best model configuration.</p></li>
+<li><p><strong>Model Validation</strong>: Evaluating model performance on validation datasets to ensure it generalizes well.</p></li>
+<li><p><strong>Model Deployment</strong>: Moving a trained model to the production environment for serving predictions.</p></li>
+</ul>
+</section>
+<section id="design-considerations">
+<h3><strong>Design Considerations:</strong><a class="headerlink" href="#design-considerations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Automation</strong>: Use tools like <a class="reference external" href="https://airflow.apache.org/"><strong>Airflow</strong></a> or <a class="reference external" href="https://www.kubeflow.org/"><strong>Kubeflow Pipelines</strong></a> to automate the entire ML workflow. Automating preprocessing, feature engineering, and hyperparameter tuning ensures repeatability and reduces errors.</p></li>
+<li><p><strong>Distributed Training</strong>: If the dataset is large, distributed training across multiple GPUs or TPUs using frameworks like <a class="reference external" href="https://horovod.ai/"><strong>Horovod</strong></a> (for TensorFlow/PyTorch) or <a class="reference external" href="https://www.ray.io/"><strong>Ray</strong></a> can significantly reduce training time.</p></li>
+</ul>
+</section>
+<section id="example-training-pipeline-design">
+<h3><strong>Example: Training Pipeline Design</strong><a class="headerlink" href="#example-training-pipeline-design" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Data Pipeline</strong>: Use <a class="reference external" href="https://kafka.apache.org/"><strong>Apache Kafka</strong></a> or <a class="reference external" href="https://flink.apache.org/"><strong>Apache Flink</strong></a> for streaming large volumes of real-time data and integrating it into the model training pipeline.</p></li>
+<li><p><strong>Feature Store</strong>: Set up a <strong>feature store</strong> like <a class="reference external" href="https://feast.dev"><strong>Feast</strong></a> to centralize feature creation and management, ensuring consistency between training and inference.</p></li>
+<li><p><strong>Model Training</strong>: Use <strong>distributed computing</strong> tools (e.g., <strong>Google Cloud AI Platform</strong>, <strong>Amazon SageMaker</strong>, or <strong>Azure ML</strong>) to train models at scale.</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="serving-and-inference-infrastructure">
+<h2><strong>2. Serving and Inference Infrastructure</strong><a class="headerlink" href="#serving-and-inference-infrastructure" title="Link to this heading">#</a></h2>
+<p>Once a model is trained, the next challenge is to <strong>serve</strong> it efficiently for real-time or batch inference.</p>
+<section id="id1">
+<h3><strong>Key Components:</strong><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Real-Time Inference (Online Serving)</strong>: Predictions are made instantly upon receiving a request. This is critical for use cases like recommendation systems or fraud detection.</p></li>
+<li><p><strong>Batch Inference (Offline Serving)</strong>: Predictions are computed for a large set of data at once and stored for later use. This is useful for tasks like churn prediction or targeted marketing.</p></li>
+</ul>
+</section>
+<section id="model-serving-platforms">
+<h3><strong>Model Serving Platforms:</strong><a class="headerlink" href="#model-serving-platforms" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.tensorflow.org/serving"><strong>TensorFlow Serving</strong></a>: Specialized for serving TensorFlow models, it provides high performance for real-time inference.</p></li>
+<li><p><a class="reference external" href="https://pytorch.org/serve/"><strong>TorchServe</strong></a>: A model server for PyTorch models, allowing easy deployment of models for inference.</p></li>
+<li><p><a class="reference external" href="https://www.seldon.io/"><strong>Seldon Core</strong></a>: A Kubernetes-native platform for deploying, scaling, and managing machine learning models on Kubernetes.</p></li>
+<li><p><a class="reference external" href="https://mlflow.org/"><strong>MLflow</strong></a>: An open-source platform to manage the ML lifecycle, including experimentation, reproducibility, and deployment.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3><strong>Design Considerations:</strong><a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Latency and Throughput</strong>: For real-time predictions, focus on reducing <strong>latency</strong>. Tools like <strong>NVIDIA Triton Inference Server</strong> and <strong>Redis</strong> (for caching model responses) can help. For high-throughput batch jobs, consider tools like <strong>Apache Spark</strong>.</p></li>
+<li><p><strong>Horizontal Scaling</strong>: Use <strong>Kubernetes</strong> to horizontally scale the number of serving instances based on demand. Auto-scaling can dynamically adjust resources.</p></li>
+<li><p><strong>Versioning</strong>: Version control the models and serve multiple models simultaneously (for A/B testing) using frameworks like <strong>MLflow</strong> or <strong>Seldon</strong>.</p></li>
+</ul>
+</section>
+<section id="example-real-time-inference-architecture">
+<h3><strong>Example: Real-Time Inference Architecture</strong><a class="headerlink" href="#example-real-time-inference-architecture" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>API Gateway</strong>: A <strong>REST API</strong> or <strong>gRPC</strong> service (using Flask, FastAPI, or gRPC) is exposed to allow clients to send prediction requests.</p></li>
+<li><p><strong>Model Server</strong>: Use <strong>TensorFlow Serving</strong> or <strong>TorchServe</strong> to handle incoming prediction requests efficiently.</p></li>
+<li><p><strong>Caching</strong>: Use <a class="reference external" href="https://redis.io/"><strong>Redis</strong></a> or <a class="reference external" href="https://memcached.org/"><strong>Memcached</strong></a> to cache repeated prediction requests and reduce inference time for frequently seen inputs.</p></li>
+<li><p><strong>Load Balancer</strong>: Use a <strong>load balancer</strong> (like <strong>NGINX</strong> or <strong>Kubernetes’ Ingress</strong>) to distribute prediction requests across multiple instances of the model server.</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="monitoring-and-continuous-learning">
+<h2><strong>3. Monitoring and Continuous Learning</strong><a class="headerlink" href="#monitoring-and-continuous-learning" title="Link to this heading">#</a></h2>
+<p>After deploying a model, it is crucial to monitor its performance in production to detect drift or degradation in its performance.</p>
+<section id="id3">
+<h3><strong>Key Components:</strong><a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Performance Monitoring</strong>: Monitoring accuracy, latency, and throughput is critical for understanding how well the model performs in the real world.</p></li>
+<li><p><strong>Data Drift Detection</strong>: Over time, the data distribution in production can change, which may cause the model to perform poorly. Data drift detectors alert you to retrain the model when drift occurs.</p></li>
+<li><p><strong>Logging and Alerts</strong>: Set up alerts for model failures, anomalies, or performance degradation using <a class="reference external" href="https://prometheus.io/"><strong>Prometheus</strong></a>, <a class="reference external" href="https://grafana.com/"><strong>Grafana</strong></a>, or cloud-native monitoring tools like <strong>AWS CloudWatch</strong> or <strong>Google Cloud Monitoring</strong>.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3><strong>Design Considerations:</strong><a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Error Tracking</strong>: Capture metrics such as the error rate, latency distribution, and anomalies using <strong>Grafana</strong>, <strong>Prometheus</strong>, or <strong>Sentry</strong>.</p></li>
+<li><p><strong>Model Retraining</strong>: Use feedback loops where new data is logged and used for continuous retraining of the model. Set up a pipeline for <strong>continuous learning</strong> and integrate it into the deployment process.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="scaling-considerations">
+<h2><strong>4. Scaling Considerations</strong><a class="headerlink" href="#scaling-considerations" title="Link to this heading">#</a></h2>
+<p>To serve predictions for millions of users or data points, your system must be designed to handle scale efficiently.</p>
+<section id="id5">
+<h3><strong>Key Components:</strong><a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Horizontal Scalability</strong>: Use Kubernetes to automatically scale the number of instances of your model server as demand increases.</p></li>
+<li><p><strong>Distributed Inference</strong>: Use distributed systems like <strong>Ray Serve</strong> to parallelize model inference and handle large-scale requests.</p></li>
+<li><p><strong>Model Parallelism</strong>: In cases of very large models, split the model across multiple devices (GPUs/TPUs) and parallelize the computation.</p></li>
+<li><p><strong>CDNs and Edge Computing</strong>: For very low-latency requirements, serve models closer to users using <strong>Content Delivery Networks (CDNs)</strong> or edge computing platforms like <strong>AWS Greengrass</strong>.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="data-management-and-feature-engineering">
+<h2><strong>5. Data Management and Feature Engineering</strong><a class="headerlink" href="#data-management-and-feature-engineering" title="Link to this heading">#</a></h2>
+<p>Ensuring consistency between the features used during training and inference is key to a reliable ML system.</p>
+<section id="id6">
+<h3><strong>Key Components:</strong><a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Feature Store</strong>: A feature store like <strong>Feast</strong> or <a class="reference external" href="https://www.tecton.ai/"><strong>Tecton</strong></a> centralizes the storage, versioning, and retrieval of features, ensuring that features used during training are identical to those used during inference.</p></li>
+<li><p><strong>Data Pipeline</strong>: Use a reliable, scalable data pipeline with <strong>ETL</strong> (Extract, Transform, Load) tools like <strong>Apache Beam</strong>, <strong>Kafka</strong>, or <strong>Airflow</strong> to continuously process and transform data for training and inference.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3><strong>Design Considerations:</strong><a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Consistency</strong>: Ensure that feature engineering done during training is available during inference by using a <strong>feature store</strong> to manage real-time and offline features.</p></li>
+<li><p><strong>Data Freshness</strong>: Ensure your system can deliver fresh data to your models. This is particularly important in streaming scenarios.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="model-versioning-and-a-b-testing">
+<h2><strong>6. Model Versioning and A/B Testing</strong><a class="headerlink" href="#model-versioning-and-a-b-testing" title="Link to this heading">#</a></h2>
+<p>It’s important to maintain multiple versions of a model and experiment with different models in production to find the best-performing one.</p>
+<section id="id8">
+<h3><strong>Key Components:</strong><a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Model Registry</strong>: A centralized place where different versions of models are stored and tracked. Tools like <strong>MLflow</strong>, <strong>Sagemaker Model Registry</strong>, and <strong>Tecton</strong> can handle model versioning and deployment tracking.</p></li>
+<li><p><strong>A/B Testing</strong>: Serve different versions of the model to different subsets of users and monitor performance to determine the best-performing model. <strong>Seldon Core</strong> provides built-in support for A/B testing.</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3><strong>Design Considerations:</strong><a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Shadow Deployment</strong>: Deploy a new model in shadow mode, where it receives traffic but its predictions are not used to make decisions. This allows safe evaluation of new models.</p></li>
+<li><p><strong>Canary Releases</strong>: Gradually roll out the new model to a small percentage of users to ensure it performs well before fully replacing the older version.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="example-end-to-end-system-architecture">
+<h2><strong>Example End-to-End System Architecture</strong><a class="headerlink" href="#example-end-to-end-system-architecture" title="Link to this heading">#</a></h2>
+<p>Here’s an architecture for a full-scale system design for an ML model:</p>
+<ol class="arabic simple">
+<li><p><strong>Data Pipeline</strong>: <strong>Apache Kafka</strong> streams real-time data to a <strong>data lake</strong> or <strong>data warehouse</strong> (e.g., <strong>Amazon S3</strong>, <strong>Google BigQuery</strong>).</p></li>
+<li><p><strong>Feature Engineering</strong>: Data is processed, and features are stored in a <strong>feature store</strong> like <strong>Feast</strong>.</p></li>
+<li><p><strong>Training Pipeline</strong>: Use <strong>Kubernetes</strong> or cloud services (e.g., <strong>SageMaker</strong>, <strong>GCP AI Platform</strong>) for distributed model training. Store models in <strong>MLflow</strong> for versioning.</p></li>
+<li><p><strong>Model Serving</strong>: Deploy the model using <strong>TensorFlow Serving</strong> or <strong>TorchServe</strong>, and expose a REST API for real-time inference.</p></li>
+<li><p><strong>Load Balancing and Auto-Scaling</strong>: Use <strong>Kubernetes</strong> to manage auto-scaling and a <strong>load balancer</strong> (e.g., NGINX) to distribute traffic across multiple model servers.</p></li>
+<li><p><strong>Monitoring</strong>: Use **Prom</p></li>
+</ol>
+<p>etheus** and <strong>Grafana</strong> for monitoring latency, throughput, and model performance.
+7. <strong>Continuous Learning</strong>: Log prediction data, retrain the model periodically, and redeploy using the pipeline.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Mixed%20Precision%20and%20Quantization.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Mixed Precision Training and Quantization</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-development-and-training-pipeline"><strong>1. Model Development and Training Pipeline</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-components"><strong>Key Components:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#design-considerations"><strong>Design Considerations:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-training-pipeline-design"><strong>Example: Training Pipeline Design</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#serving-and-inference-infrastructure"><strong>2. Serving and Inference Infrastructure</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Key Components:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-serving-platforms"><strong>Model Serving Platforms:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>Design Considerations:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-real-time-inference-architecture"><strong>Example: Real-Time Inference Architecture</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-and-continuous-learning"><strong>3. Monitoring and Continuous Learning</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>Key Components:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>Design Considerations:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-considerations"><strong>4. Scaling Considerations</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>Key Components:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-management-and-feature-engineering"><strong>5. Data Management and Feature Engineering</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>Key Components:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><strong>Design Considerations:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-versioning-and-a-b-testing"><strong>6. Model Versioning and A/B Testing</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><strong>Key Components:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><strong>Design Considerations:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-end-to-end-system-architecture"><strong>Example End-to-End System Architecture</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Qiang Hu
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

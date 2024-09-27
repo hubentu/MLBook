@@ -1,0 +1,761 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Core Machine Learning Concepts &#8212; Machine Learning Notebook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Core ML concepts';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Model Optimization" href="Model%20Optimization.html" />
+    <link rel="prev" title="Machine Learning notebook" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/mlb.png" class="logo__image only-light" alt="Machine Learning Notebook - Home"/>
+    <script>document.write(`<img src="_static/mlb.png" class="logo__image only-dark" alt="Machine Learning Notebook - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Machine Learning notebook
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Core Machine Learning Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Model%20Optimization.html">Model Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mixed%20Precision%20and%20Quantization.html">Mixed Precision Training and Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="system%20design.html">System Design for Machine Learning Models</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FCore ML concepts.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Core ML concepts.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Core Machine Learning Concepts</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-supervised-learning-basics">Question 1: Supervised Learning Basics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">Data Preparation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-selection">Model Selection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-evaluation">Model Evaluation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-feature-engineering-and-model-improvement">Question 2: Feature Engineering and Model Improvement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-for-model-improvement">Feature Engineering for Model Improvement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-transformation-techniques">Feature Transformation Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-and-scaling"><strong>1. Normalization and Scaling:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encoding-categorical-variables"><strong>2. Encoding Categorical Variables:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-features"><strong>3. Polynomial Features:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#binning"><strong>4. Binning:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#log-and-power-transformations"><strong>5. Log and Power Transformations:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automating-feature-engineering">Automating Feature Engineering</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-for-automated-feature-engineering">Tools for Automated Feature Engineering</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#methods-for-feature-selection"><strong>Methods for Feature Selection:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-overfitting">Handling Overfitting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#addressing-underestimation-in-model-predictions">Addressing Underestimation in Model Predictions</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="core-machine-learning-concepts">
+<h1>Core Machine Learning Concepts<a class="headerlink" href="#core-machine-learning-concepts" title="Link to this heading">#</a></h1>
+<p>To begin, let’s make sure you’re comfortable with the core machine learning concepts that are fundamental for any machine learning engineering role. This includes understanding different types of machine learning, model evaluation metrics, and optimization techniques.</p>
+<section id="question-1-supervised-learning-basics">
+<h2>Question 1: Supervised Learning Basics<a class="headerlink" href="#question-1-supervised-learning-basics" title="Link to this heading">#</a></h2>
+<p>Scenario:
+Imagine you are working on a project where you need to predict housing prices based on features like location, size, and the number of bedrooms. You have a labeled dataset where each entry corresponds to a house with its features and the actual sale price.</p>
+<p>Task:</p>
+<ol class="arabic simple">
+<li><p>Explain how you would approach this problem using a supervised learning algorithm.</p></li>
+<li><p>What type of model would you choose, and why?</p></li>
+<li><p>How would you evaluate the model’s performance?</p></li>
+</ol>
+<section id="data-preparation">
+<h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading">#</a></h3>
+<p>Key points include:</p>
+<ul class="simple">
+<li><p>One-Hot Encoding: Essential for categorical variables like location if you use models that require numerical input.</p></li>
+<li><p>Outlier Detection: Important to identify and handle outliers that could skew the model.</p></li>
+<li><p>Imputation of Missing Data: Necessary to handle missing values without discarding valuable data.</p></li>
+</ul>
+</section>
+<section id="model-selection">
+<h3>Model Selection<a class="headerlink" href="#model-selection" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Linear Regression: A solid choice for small datasets or when you suspect a linear relationship between features and the target. It’s simple and interpretable, making it easy to understand how each feature influences the price.</p></li>
+<li><p>XGBoost or Deep Neural Networks (DNNs): These are more powerful models that can capture complex relationships in larger datasets. XGBoost is especially popular for tabular data due to its robustness and performance. DNNs can be effective but require more data and careful tuning to avoid overfitting.</p></li>
+</ul>
+</section>
+<section id="model-evaluation">
+<h3>Model Evaluation<a class="headerlink" href="#model-evaluation" title="Link to this heading">#</a></h3>
+<p>Mean Squared Error (MSE) as the evaluation metric. This is appropriate for regression tasks as it penalizes larger errors more than smaller ones, which aligns well with predicting house prices where large deviations can be costly.</p>
+</section>
+</section>
+<section id="question-2-feature-engineering-and-model-improvement">
+<h2>Question 2: Feature Engineering and Model Improvement<a class="headerlink" href="#question-2-feature-engineering-and-model-improvement" title="Link to this heading">#</a></h2>
+<p>Scenario:
+Assume your initial model is performing reasonably well, but you believe there is room for improvement.</p>
+<p>Task:</p>
+<ol class="arabic simple">
+<li><p>How would you approach feature engineering to potentially improve the model’s performance?</p></li>
+<li><p>Suppose your model is overfitting. What strategies would you use to mitigate this?</p></li>
+<li><p>How would you handle a scenario where your model’s predictions are consistently underestimating the house prices?</p></li>
+</ol>
+<section id="feature-engineering-for-model-improvement">
+<h3>Feature Engineering for Model Improvement<a class="headerlink" href="#feature-engineering-for-model-improvement" title="Link to this heading">#</a></h3>
+<p>Some key feature engineering techniques:</p>
+<ul class="simple">
+<li><p>Removing Outliers: This can help in ensuring that the model is not skewed by extreme values, which could distort predictions.</p></li>
+<li><p>Imputing Missing Data: This is crucial to avoid losing valuable information. Depending on the data, you might consider different imputation methods (e.g., mean, median, or using a model-based imputation).</p></li>
+<li><p>One-Hot Encoding: Essential for handling categorical data, especially for tree-based models like XGBoost.</p></li>
+<li><p>Log Transformation: A good approach for skewed features, as it can make the feature distribution more normal and help the model learn better relationships.</p></li>
+<li><p>Scaling or Normalizing Data: Important for models that are sensitive to feature scales, such as linear regression or neural networks.</p></li>
+</ul>
+<p>Additional Techniques:</p>
+<ul class="simple">
+<li><p>Feature Interaction: Creating new features by combining existing ones (e.g., interaction terms in regression models) can help capture more complex relationships.</p></li>
+<li><p>Polynomial Features: For linear models, adding polynomial features can help capture non-linear relationships without changing the model type.</p></li>
+<li><p>Feature Selection: Techniques like recursive feature elimination (RFE) or using feature importance scores from models (e.g., XGBoost) can help in identifying and keeping the most relevant features.</p></li>
+</ul>
+</section>
+<section id="feature-transformation-techniques">
+<h3>Feature Transformation Techniques<a class="headerlink" href="#feature-transformation-techniques" title="Link to this heading">#</a></h3>
+<p>Transforming raw data into meaningful input for a model often involves several key techniques:</p>
+<section id="normalization-and-scaling">
+<h4><strong>1. Normalization and Scaling:</strong><a class="headerlink" href="#normalization-and-scaling" title="Link to this heading">#</a></h4>
+<p>Machine learning models often perform better when numerical data is on a similar scale.</p>
+<ul class="simple">
+<li><p><strong>Min-Max Scaling</strong>: Rescales data to a range [0, 1].</p></li>
+<li><p><strong>Standardization (Z-score normalization)</strong>: Transforms data to have a mean of 0 and a standard deviation of 1.</p></li>
+</ul>
+<p><strong>Example in Python:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">MinMaxScaler</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>  <span class="c1"># For standardization</span>
+<span class="n">scaled_data</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">numeric_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="encoding-categorical-variables">
+<h4><strong>2. Encoding Categorical Variables:</strong><a class="headerlink" href="#encoding-categorical-variables" title="Link to this heading">#</a></h4>
+<p>Many machine learning models (like linear regression or tree-based models) require numerical input, so categorical features must be transformed.</p>
+<ul class="simple">
+<li><p><strong>One-Hot Encoding</strong>: Converts categories into binary columns (1 or 0).</p></li>
+<li><p><strong>Label Encoding</strong>: Converts categorical values into numerical labels (0, 1, 2, …).</p></li>
+<li><p><strong>Target Encoding</strong>: Replaces each category with the mean of the target variable for that category (useful for high cardinality categories).</p></li>
+</ul>
+<p><strong>Example of One-Hot Encoding:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span>
+<span class="n">encoded_data</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">categorical_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="polynomial-features">
+<h4><strong>3. Polynomial Features:</strong><a class="headerlink" href="#polynomial-features" title="Link to this heading">#</a></h4>
+<p>For linear models, creating polynomial features can help model non-linear relationships between variables.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+
+<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">interaction_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">polynomial_data</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">numeric_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="binning">
+<h4><strong>4. Binning:</strong><a class="headerlink" href="#binning" title="Link to this heading">#</a></h4>
+<p>Binning numerical features can convert continuous values into discrete intervals. This is useful when the exact value is less important than the range.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;age_bin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Youth&#39;</span><span class="p">,</span> <span class="s1">&#39;Young Adult&#39;</span><span class="p">,</span> <span class="s1">&#39;Adult&#39;</span><span class="p">,</span> <span class="s1">&#39;Senior&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="log-and-power-transformations">
+<h4><strong>5. Log and Power Transformations:</strong><a class="headerlink" href="#log-and-power-transformations" title="Link to this heading">#</a></h4>
+<p>Applying transformations like log or square root to skewed data can help normalize it and reduce the impact of outliers.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;log_income&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">])</span>  <span class="c1"># Log transformation</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="automating-feature-engineering">
+<h3>Automating Feature Engineering<a class="headerlink" href="#automating-feature-engineering" title="Link to this heading">#</a></h3>
+<p>Given the complexity of modern datasets, manually engineering features can be time-consuming. Automated feature engineering tools help generate new features by applying transformations and combinations of existing features.</p>
+<section id="tools-for-automated-feature-engineering">
+<h4>Tools for Automated Feature Engineering<a class="headerlink" href="#tools-for-automated-feature-engineering" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>FeatureTools</strong>: An open-source Python library that automates feature engineering by constructing new features from relational data.</p></li>
+<li><p><strong>DataRobot and <a class="reference external" href="http://H2O.ai">H2O.ai</a></strong>: These platforms offer automated feature engineering and model training as part of AutoML solutions.</p></li>
+</ul>
+<p><strong>Example: FeatureTools:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">featuretools</span> <span class="k">as</span> <span class="nn">ft</span>
+
+<span class="n">es</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">EntitySet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;sales_data&quot;</span><span class="p">)</span>
+<span class="n">es</span> <span class="o">=</span> <span class="n">es</span><span class="o">.</span><span class="n">entity_from_dataframe</span><span class="p">(</span><span class="n">entity_id</span><span class="o">=</span><span class="s2">&quot;transactions&quot;</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">&quot;transaction_id&quot;</span><span class="p">,</span> <span class="n">time_index</span><span class="o">=</span><span class="s2">&quot;transaction_date&quot;</span><span class="p">)</span>
+
+<span class="c1"># Automatically generate new features</span>
+<span class="n">feature_matrix</span><span class="p">,</span> <span class="n">feature_defs</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">dfs</span><span class="p">(</span><span class="n">entityset</span><span class="o">=</span><span class="n">es</span><span class="p">,</span> <span class="n">target_entity</span><span class="o">=</span><span class="s2">&quot;transactions&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="feature-selection">
+<h3>Feature Selection<a class="headerlink" href="#feature-selection" title="Link to this heading">#</a></h3>
+<p>Not all features are useful for your model. Some may be redundant, irrelevant, or even harmful, leading to overfitting. Feature selection helps reduce the feature space, improving model performance and interpretability.</p>
+<section id="methods-for-feature-selection">
+<h4><strong>Methods for Feature Selection:</strong><a class="headerlink" href="#methods-for-feature-selection" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Univariate Selection</strong>: Statistical tests (e.g., chi-square for categorical data, ANOVA for numerical data) to rank the most significant features.</p></li>
+<li><p><strong>Recursive Feature Elimination (RFE)</strong>: Iteratively removes the least important features based on a model’s coefficients or importance scores.</p></li>
+<li><p><strong>Regularization (L1/L2)</strong>: Models like <strong>Lasso</strong> (L1) or <strong>Ridge</strong> (L2) apply penalties to less important features, effectively shrinking their coefficients to zero.</p></li>
+<li><p><strong>Tree-Based Feature Importance</strong>: Tree-based models (like Random Forest or XGBoost) provide feature importance scores, indicating which features are most useful in predicting the target variable.</p></li>
+</ul>
+<p><strong>Example: Feature Importance with Random Forest:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Get feature importances</span>
+<span class="n">importances</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">feature_importances_</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="handling-overfitting">
+<h3>Handling Overfitting<a class="headerlink" href="#handling-overfitting" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Regularization: Adding regularization terms (L1/L2) to the loss function is a standard method to penalize large coefficients and thus reduce overfitting. For DNNs, techniques like dropout can be very effective in preventing the model from relying too heavily on any particular set of neurons.</p></li>
+<li><p>Early Stopping: This is particularly useful for DNNs, where you monitor the model’s performance on a validation set during training and stop training once the performance starts to degrade, indicating overfitting.</p></li>
+<li><p>Cross-Validation: Using techniques like k-fold cross-validation can give you a better estimate of the model’s generalization ability and help tune hyperparameters more effectively.</p></li>
+<li><p>Data Augmentation: For tasks like image recognition, augmenting your training data can help prevent overfitting by exposing the model to more varied data.</p></li>
+<li><p>Simplifying the Model: Sometimes reducing the model’s complexity, such as by reducing the number of layers in a neural network or pruning a decision tree, can help mitigate overfitting.</p></li>
+</ul>
+</section>
+<section id="addressing-underestimation-in-model-predictions">
+<h3>Addressing Underestimation in Model Predictions<a class="headerlink" href="#addressing-underestimation-in-model-predictions" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Discover Missing Features: This is crucial. There might be important features not included in the model that significantly affect house prices, such as proximity to schools, crime rates, or other socioeconomic factors.
+Additional Approaches:</p></li>
+<li><p>Bias Correction: Analyze the bias in predictions across different ranges of the target variable (house prices) to understand where the underestimation occurs. You can then use techniques like ensemble models to correct for these biases.</p></li>
+<li><p>Adjusting the Loss Function: If the model consistently underestimates, you might modify the loss function to penalize underestimates more than overestimates, though this requires careful consideration to avoid introducing new biases.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Machine Learning notebook</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Model%20Optimization.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Model Optimization</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-supervised-learning-basics">Question 1: Supervised Learning Basics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">Data Preparation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-selection">Model Selection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-evaluation">Model Evaluation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-feature-engineering-and-model-improvement">Question 2: Feature Engineering and Model Improvement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-for-model-improvement">Feature Engineering for Model Improvement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-transformation-techniques">Feature Transformation Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-and-scaling"><strong>1. Normalization and Scaling:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encoding-categorical-variables"><strong>2. Encoding Categorical Variables:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-features"><strong>3. Polynomial Features:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#binning"><strong>4. Binning:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#log-and-power-transformations"><strong>5. Log and Power Transformations:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automating-feature-engineering">Automating Feature Engineering</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-for-automated-feature-engineering">Tools for Automated Feature Engineering</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#methods-for-feature-selection"><strong>Methods for Feature Selection:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-overfitting">Handling Overfitting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#addressing-underestimation-in-model-predictions">Addressing Underestimation in Model Predictions</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Qiang Hu
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
