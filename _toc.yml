@@ -1,0 +1,10 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: Core ML concepts
+- file: Model Optimization
+- file: Mixed Precision and Quantization
+- file: system design
