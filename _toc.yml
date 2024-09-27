@@ -5,6 +5,9 @@ format: jb-book
 root: intro
 chapters:
 - file: Core ML concepts
+- file: ML methods
 - file: Model Optimization
 - file: Mixed Precision and Quantization
 - file: system design
+- file: LLM
+- file: Image processing

@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'LLM';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="System Design for Machine Learning Models" href="system%20design.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -122,8 +123,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -179,11 +178,13 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Core%20ML%20concepts.html">Core Machine Learning Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ML%20methods.html"><strong>Popular Machine Learning Methods</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Model%20Optimization.html">Model Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mixed%20Precision%20and%20Quantization.html">Mixed Precision Training and Quantization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="system%20design.html">System Design for Machine Learning Models</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Large Language Models (LLMs)</a></li>
 </ul>
 
     </div>
@@ -414,7 +415,42 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mitigation-strategies"><strong>Mitigation Strategies:</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-end-to-end-system-design-for-llms"><strong>Example End-to-End System Design for LLMs:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-end-to-end-system-design-for-llms">7. <strong>Example End-to-End System Design for LLMs:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#llm-hallucination-problem-and-solutions">8.<strong>LLM Hallucination Problem and Solutions</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-hallucination-in-llms"><strong>1. What is Hallucination in LLMs?</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-hallucination"><strong>Example of Hallucination:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-hallucination-happens-in-llms"><strong>2. Why Hallucination Happens in LLMs?</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-on-unreliable-or-noisy-data"><strong>1. Training on Unreliable or Noisy Data:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lack-of-grounding-in-external-knowledge"><strong>2. Lack of Grounding in External Knowledge:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#autoregressive-nature-of-text-generation"><strong>3. Autoregressive Nature of Text Generation:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#overgeneralization"><strong>4. Overgeneralization:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#overconfidence-in-responses"><strong>5. Overconfidence in Responses:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-hallucination"><strong>3. Types of Hallucination</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#factual-hallucination"><strong>1. Factual Hallucination:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#contextual-or-logical-hallucination"><strong>2. Contextual or Logical Hallucination:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#risks-of-hallucination-in-real-world-applications"><strong>4. Risks of Hallucination in Real-World Applications</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solutions-and-mitigations-for-llm-hallucination"><strong>5. Solutions and Mitigations for LLM Hallucination</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grounding-llms-with-external-knowledge"><strong>1. Grounding LLMs with External Knowledge:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-models"><strong>2. Hybrid Models:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#post-processing-for-fact-checking"><strong>3. Post-Processing for Fact-Checking:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-of-confidence-scoring"><strong>4. Use of Confidence Scoring:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#human-in-the-loop-verification"><strong>5. Human-in-the-Loop Verification:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-on-high-quality-data"><strong>6. Fine-Tuning on High-Quality Data:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-engineering-for-llms"><strong>7. Prompt Engineering for LLMs:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-with-negative-sampling"><strong>8. Training with Negative Sampling:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#distillation-for-fact-reliable-models"><strong>9. Distillation for Fact-Reliable Models:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-system-to-mitigate-hallucination"><strong>Example System to Mitigate Hallucination:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><strong>Conclusion:</strong></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -596,9 +632,8 @@ document.write(`
 </ul>
 </section>
 </section>
-<hr class="docutils" />
 <section id="example-end-to-end-system-design-for-llms">
-<h2><strong>Example End-to-End System Design for LLMs:</strong><a class="headerlink" href="#example-end-to-end-system-design-for-llms" title="Link to this heading">#</a></h2>
+<h2>7. <strong>Example End-to-End System Design for LLMs:</strong><a class="headerlink" href="#example-end-to-end-system-design-for-llms" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><strong>Data Pipeline</strong>: Data is ingested from multiple text sources (e.g., news articles, web crawls, research papers) using an ETL pipeline (e.g., Apache Kafka or Beam).</p></li>
 <li><p><strong>Training/Pre-training</strong>: The LLM is trained on a large cluster of GPUs using distributed training techniques (e.g., model parallelism or pipeline parallelism).</p></li>
@@ -606,6 +641,169 @@ document.write(`
 <li><p><strong>Model Serving</strong>: The model is deployed on a high-performance inference server (e.g., Hugging Face or TensorFlow Serving), with optimizations like quantization or model distillation to reduce latency.</p></li>
 <li><p><strong>Monitoring and Feedback Loop</strong>: The system logs user interactions and detects potential biases or drift in model performance. New data is periodically collected and used to retrain or fine-tune the model.</p></li>
 </ol>
+</section>
+<section id="llm-hallucination-problem-and-solutions">
+<h2>8.<strong>LLM Hallucination Problem and Solutions</strong><a class="headerlink" href="#llm-hallucination-problem-and-solutions" title="Link to this heading">#</a></h2>
+<p>One of the significant challenges with <strong>Large Language Models (LLMs)</strong> like GPT, BERT, T5, and other transformer-based models is the phenomenon known as <strong>“hallucination.”</strong> In the context of LLMs, hallucination refers to the model generating text that is <strong>plausible but factually incorrect or irrelevant</strong>, even when prompted with clear and factual input. This issue is particularly problematic in real-world applications where accuracy and reliability are critical, such as medical advice, legal documentation, or customer service automation.</p>
+<p>In this discussion, we’ll cover:</p>
+<ol class="arabic simple">
+<li><p><strong>What is Hallucination in LLMs?</strong></p></li>
+<li><p><strong>Why Hallucination Happens in LLMs?</strong></p></li>
+<li><p><strong>Types of Hallucination</strong></p></li>
+<li><p><strong>Risks of Hallucination in Real-World Applications</strong></p></li>
+<li><p><strong>Solutions and Mitigations for LLM Hallucination</strong></p></li>
+</ol>
+<hr class="docutils" />
+<section id="what-is-hallucination-in-llms">
+<h3><strong>1. What is Hallucination in LLMs?</strong><a class="headerlink" href="#what-is-hallucination-in-llms" title="Link to this heading">#</a></h3>
+<p>LLM hallucination occurs when a model generates text that appears syntactically correct and coherent but is <strong>factually inaccurate, logically flawed, or nonsensical</strong>. For example:</p>
+<ul class="simple">
+<li><p><strong>Factual Hallucination</strong>: If asked about a historical event, the model might invent dates, places, or people that do not exist.</p></li>
+<li><p><strong>Logical Hallucination</strong>: If asked a mathematical question, the model might provide an answer that seems valid but is logically incorrect.</p></li>
+</ul>
+<p>Hallucination is particularly concerning in scenarios where users might take the model’s output as truth, especially if the generated information is plausible.</p>
+<section id="example-of-hallucination">
+<h4><strong>Example of Hallucination:</strong><a class="headerlink" href="#example-of-hallucination" title="Link to this heading">#</a></h4>
+<p><strong>Input</strong>: “Who was the first president of the United States?”
+<strong>LLM Output</strong>: “The first president of the United States was Benjamin Franklin.”</p>
+<p>In this case, the model has generated an answer that is coherent and plausible but factually incorrect (George Washington is the correct answer).</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="why-hallucination-happens-in-llms">
+<h3><strong>2. Why Hallucination Happens in LLMs?</strong><a class="headerlink" href="#why-hallucination-happens-in-llms" title="Link to this heading">#</a></h3>
+<p>There are several reasons why LLMs hallucinate:</p>
+<section id="training-on-unreliable-or-noisy-data">
+<h4><strong>1. Training on Unreliable or Noisy Data:</strong><a class="headerlink" href="#training-on-unreliable-or-noisy-data" title="Link to this heading">#</a></h4>
+<p>LLMs are trained on massive amounts of text data from the internet, which includes a mix of reliable and unreliable sources. This can include factually incorrect information, opinions, and fiction. Since the model doesn’t inherently distinguish between fact and fiction, it can reproduce inaccuracies or create new ones based on patterns in the data.</p>
+</section>
+<section id="lack-of-grounding-in-external-knowledge">
+<h4><strong>2. Lack of Grounding in External Knowledge:</strong><a class="headerlink" href="#lack-of-grounding-in-external-knowledge" title="Link to this heading">#</a></h4>
+<p>LLMs typically generate text based on learned patterns, but they don’t have access to real-time factual databases or external knowledge sources. Unlike structured query systems (e.g., search engines or knowledge graphs), LLMs don’t verify the correctness of information when generating responses.</p>
+</section>
+<section id="autoregressive-nature-of-text-generation">
+<h4><strong>3. Autoregressive Nature of Text Generation:</strong><a class="headerlink" href="#autoregressive-nature-of-text-generation" title="Link to this heading">#</a></h4>
+<p>LLMs like GPT are autoregressive models, meaning they generate text one token at a time based on the previous tokens. This can lead to <strong>drift</strong> in the output, where the model builds on earlier incorrect tokens, compounding errors and generating hallucinations.</p>
+</section>
+<section id="overgeneralization">
+<h4><strong>4. Overgeneralization:</strong><a class="headerlink" href="#overgeneralization" title="Link to this heading">#</a></h4>
+<p>LLMs are designed to be general-purpose, so they often try to provide a response even when there isn’t a clear or factual answer. In such cases, the model may generate something that <strong>“sounds right”</strong> but is factually incorrect.</p>
+</section>
+<section id="overconfidence-in-responses">
+<h4><strong>5. Overconfidence in Responses:</strong><a class="headerlink" href="#overconfidence-in-responses" title="Link to this heading">#</a></h4>
+<p>LLMs are trained to produce coherent text, which often makes their output appear confident, even when the information is incorrect or fabricated. This overconfidence can be misleading for users who trust the model’s output.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="types-of-hallucination">
+<h3><strong>3. Types of Hallucination</strong><a class="headerlink" href="#types-of-hallucination" title="Link to this heading">#</a></h3>
+<p>Hallucination in LLMs can be categorized into two broad types:</p>
+<section id="factual-hallucination">
+<h4><strong>1. Factual Hallucination:</strong><a class="headerlink" href="#factual-hallucination" title="Link to this heading">#</a></h4>
+<p>The model generates statements that are false or factually inaccurate. This can include:</p>
+<ul class="simple">
+<li><p>Incorrect facts about history, science, or geography.</p></li>
+<li><p>Fabricating non-existent individuals, places, or events.</p></li>
+</ul>
+</section>
+<section id="contextual-or-logical-hallucination">
+<h4><strong>2. Contextual or Logical Hallucination:</strong><a class="headerlink" href="#contextual-or-logical-hallucination" title="Link to this heading">#</a></h4>
+<p>The model generates text that is contextually inappropriate or logically inconsistent. For example:</p>
+<ul class="simple">
+<li><p>Contradictory statements in the same response.</p></li>
+<li><p>Non-sequiturs or tangents that don’t follow from the input.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="risks-of-hallucination-in-real-world-applications">
+<h3><strong>4. Risks of Hallucination in Real-World Applications</strong><a class="headerlink" href="#risks-of-hallucination-in-real-world-applications" title="Link to this heading">#</a></h3>
+<p>Hallucination can have serious consequences depending on the application:</p>
+<ul class="simple">
+<li><p><strong>Healthcare</strong>: Inaccurate medical advice generated by an LLM could result in harm to patients if users rely on the model’s information.</p></li>
+<li><p><strong>Legal</strong>: Hallucination in legal documents or advice could lead to incorrect interpretations of laws and serious legal consequences.</p></li>
+<li><p><strong>Customer Service</strong>: An LLM-powered chatbot might provide customers with incorrect solutions, leading to dissatisfaction or loss of trust in the company.</p></li>
+<li><p><strong>Education</strong>: In educational applications, incorrect information could mislead students or users who rely on the LLM for learning.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="solutions-and-mitigations-for-llm-hallucination">
+<h3><strong>5. Solutions and Mitigations for LLM Hallucination</strong><a class="headerlink" href="#solutions-and-mitigations-for-llm-hallucination" title="Link to this heading">#</a></h3>
+<p>Addressing hallucination in LLMs is an active area of research. While completely eliminating hallucination is difficult, several strategies and techniques can mitigate its impact.</p>
+<section id="grounding-llms-with-external-knowledge">
+<h4><strong>1. Grounding LLMs with External Knowledge:</strong><a class="headerlink" href="#grounding-llms-with-external-knowledge" title="Link to this heading">#</a></h4>
+<p>One of the most effective ways to reduce hallucination is to ground the LLM’s output in factual and up-to-date knowledge from trusted sources. This involves integrating LLMs with structured knowledge bases or real-time data sources.</p>
+<ul class="simple">
+<li><p><strong>Retrieval-Augmented Generation (RAG)</strong>: LLMs can be paired with information retrieval systems. Before generating text, the model retrieves relevant documents or facts from a knowledge base or search engine (e.g., Wikipedia, Google Search, or enterprise databases). This allows the model to use verified information as context during generation.</p></li>
+</ul>
+<p><strong>Example:</strong>
+Incorporating a factual knowledge base like <strong>Wikidata</strong> or <strong>Google Knowledge Graph</strong> into an LLM ensures that the model retrieves accurate information before generating its response.</p>
+</section>
+<section id="hybrid-models">
+<h4><strong>2. Hybrid Models:</strong><a class="headerlink" href="#hybrid-models" title="Link to this heading">#</a></h4>
+<p>Another solution is to use a combination of rule-based systems and LLMs. In this setup, a rule-based system or symbolic reasoning model verifies the correctness of certain outputs, especially in critical applications like healthcare or finance.</p>
+<ul class="simple">
+<li><p><strong>Symbolic AI + LLMs</strong>: Integrate symbolic reasoning systems that can perform logical checks on the LLM’s output, ensuring that factual correctness is maintained.</p></li>
+</ul>
+</section>
+<section id="post-processing-for-fact-checking">
+<h4><strong>3. Post-Processing for Fact-Checking:</strong><a class="headerlink" href="#post-processing-for-fact-checking" title="Link to this heading">#</a></h4>
+<p>A potential mitigation strategy is to implement <strong>post-processing</strong> steps that check the model’s output against trusted sources. Fact-checking algorithms can automatically verify the accuracy of the generated text and flag potential hallucinations.</p>
+<ul class="simple">
+<li><p><strong>BERT-based Fact-Checkers</strong>: Fine-tuned BERT models can be used to compare LLM-generated text against known facts, determining whether the generated text is likely to be accurate.</p></li>
+</ul>
+</section>
+<section id="use-of-confidence-scoring">
+<h4><strong>4. Use of Confidence Scoring:</strong><a class="headerlink" href="#use-of-confidence-scoring" title="Link to this heading">#</a></h4>
+<p>LLMs can be trained or modified to output a <strong>confidence score</strong> with each token or sentence. This score provides an indication of how certain the model is about its output. Responses with low confidence scores can be flagged for review or accompanied by disclaimers.</p>
+<ul class="simple">
+<li><p><strong>Calibration of LLMs</strong>: Models can be trained to better estimate the uncertainty of their predictions. Confidence-based thresholding can prevent highly uncertain outputs from being presented as facts.</p></li>
+</ul>
+</section>
+<section id="human-in-the-loop-verification">
+<h4><strong>5. Human-in-the-Loop Verification:</strong><a class="headerlink" href="#human-in-the-loop-verification" title="Link to this heading">#</a></h4>
+<p>For high-stakes applications, integrating <strong>human-in-the-loop</strong> systems where human experts verify the output of the model is crucial. This is particularly relevant in fields like medicine, law, or scientific research where factual accuracy is paramount.</p>
+</section>
+<section id="fine-tuning-on-high-quality-data">
+<h4><strong>6. Fine-Tuning on High-Quality Data:</strong><a class="headerlink" href="#fine-tuning-on-high-quality-data" title="Link to this heading">#</a></h4>
+<p>Fine-tuning LLMs on carefully curated datasets that are factually accurate can reduce the risk of hallucination. Training the model on trusted sources (e.g., peer-reviewed journals, curated databases) helps the model avoid generating factually incorrect information.</p>
+<ul class="simple">
+<li><p><strong>Training on Domain-Specific Data</strong>: For specialized tasks (e.g., medical or legal advice), fine-tuning on high-quality, domain-specific data reduces the likelihood of hallucination by ensuring the model is grounded in relevant facts.</p></li>
+</ul>
+</section>
+<section id="prompt-engineering-for-llms">
+<h4><strong>7. Prompt Engineering for LLMs:</strong><a class="headerlink" href="#prompt-engineering-for-llms" title="Link to this heading">#</a></h4>
+<p>Carefully crafting the prompts given to an LLM can help reduce hallucinations. Clear, structured, and well-defined prompts lead to more accurate outputs. Additionally, adding constraints to the prompts (e.g., specifying that the response should only come from verifiable facts) can help guide the model toward more accurate outputs.</p>
+<ul class="simple">
+<li><p><strong>Constrained Generation</strong>: Modify the prompt to require that the response comes from a reliable source, reducing the likelihood of hallucination.</p></li>
+</ul>
+</section>
+<section id="training-with-negative-sampling">
+<h4><strong>8. Training with Negative Sampling:</strong><a class="headerlink" href="#training-with-negative-sampling" title="Link to this heading">#</a></h4>
+<p>During training, LLMs can be exposed to examples of hallucinations and trained to avoid them. This is done by providing negative samples where the model’s hallucinations are penalized, encouraging the model to avoid generating similar incorrect outputs in the future.</p>
+</section>
+<section id="distillation-for-fact-reliable-models">
+<h4><strong>9. Distillation for Fact-Reliable Models:</strong><a class="headerlink" href="#distillation-for-fact-reliable-models" title="Link to this heading">#</a></h4>
+<p>Knowledge distillation can be used to transfer knowledge from a <strong>“teacher” model</strong> trained on a factual dataset to a <strong>“student” model</strong>. This ensures that the distilled model retains knowledge that is more factually accurate and less likely to hallucinate.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="example-system-to-mitigate-hallucination">
+<h3><strong>Example System to Mitigate Hallucination:</strong><a class="headerlink" href="#example-system-to-mitigate-hallucination" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Data Retrieval Layer</strong>: Implement a retrieval-augmented generation (RAG) system where the LLM first retrieves relevant information from trusted sources like Wikipedia, medical databases, or legal documents before generating its response.</p></li>
+<li><p><strong>Fact-Checking Layer</strong>: After the LLM generates text, a fine-tuned fact-checker (based on BERT or another verification model) verifies the factual accuracy of the response. If the output is flagged, it is either discarded or presented with a disclaimer.</p></li>
+<li><p><strong>Confidence Scoring</strong>: Add a confidence threshold to the LLM’s outputs</p></li>
+</ol>
+<p>. Any output below a certain confidence level is either omitted or flagged for human review.</p>
+<ol class="arabic simple" start="4">
+<li><p><strong>Human-in-the-Loop</strong>: In high-stakes applications, involve human experts who review the output and make corrections or modifications if the model’s response contains hallucinations.</p></li>
+</ol>
+</section>
+<section id="conclusion">
+<h3><strong>Conclusion:</strong><a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
+<p>While hallucination remains a major challenge for LLMs, integrating fact-checking, retrieval-augmented generation, and human oversight can mitigate its risks in real-world applications. As research progresses, solutions like grounding models in structured knowledge and fine-tuning on high-quality data will continue to reduce hallucination issues.</p>
+</section>
 </section>
 </section>
 
@@ -639,6 +837,15 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="system%20design.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">System Design for Machine Learning Models</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
@@ -690,7 +897,42 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mitigation-strategies"><strong>Mitigation Strategies:</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-end-to-end-system-design-for-llms"><strong>Example End-to-End System Design for LLMs:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-end-to-end-system-design-for-llms">7. <strong>Example End-to-End System Design for LLMs:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#llm-hallucination-problem-and-solutions">8.<strong>LLM Hallucination Problem and Solutions</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-hallucination-in-llms"><strong>1. What is Hallucination in LLMs?</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-hallucination"><strong>Example of Hallucination:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-hallucination-happens-in-llms"><strong>2. Why Hallucination Happens in LLMs?</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-on-unreliable-or-noisy-data"><strong>1. Training on Unreliable or Noisy Data:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lack-of-grounding-in-external-knowledge"><strong>2. Lack of Grounding in External Knowledge:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#autoregressive-nature-of-text-generation"><strong>3. Autoregressive Nature of Text Generation:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#overgeneralization"><strong>4. Overgeneralization:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#overconfidence-in-responses"><strong>5. Overconfidence in Responses:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-hallucination"><strong>3. Types of Hallucination</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#factual-hallucination"><strong>1. Factual Hallucination:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#contextual-or-logical-hallucination"><strong>2. Contextual or Logical Hallucination:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#risks-of-hallucination-in-real-world-applications"><strong>4. Risks of Hallucination in Real-World Applications</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solutions-and-mitigations-for-llm-hallucination"><strong>5. Solutions and Mitigations for LLM Hallucination</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grounding-llms-with-external-knowledge"><strong>1. Grounding LLMs with External Knowledge:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-models"><strong>2. Hybrid Models:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#post-processing-for-fact-checking"><strong>3. Post-Processing for Fact-Checking:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-of-confidence-scoring"><strong>4. Use of Confidence Scoring:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#human-in-the-loop-verification"><strong>5. Human-in-the-Loop Verification:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-on-high-quality-data"><strong>6. Fine-Tuning on High-Quality Data:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-engineering-for-llms"><strong>7. Prompt Engineering for LLMs:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-with-negative-sampling"><strong>8. Training with Negative Sampling:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#distillation-for-fact-reliable-models"><strong>9. Distillation for Fact-Reliable Models:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-system-to-mitigate-hallucination"><strong>Example System to Mitigate Hallucination:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><strong>Conclusion:</strong></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -705,7 +947,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By Qiang Hu
+By Qiang Hu, AI assistant
 </p>
 
   </div>

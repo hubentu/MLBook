@@ -1,0 +1,1184 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Machine Learning Methods in Image Processing &#8212; Machine Learning Notebook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Image processing';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Large Language Models (LLMs)" href="LLM.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/mlb.png" class="logo__image only-light" alt="Machine Learning Notebook - Home"/>
+    <script>document.write(`<img src="_static/mlb.png" class="logo__image only-dark" alt="Machine Learning Notebook - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Machine Learning notebook
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Core%20ML%20concepts.html">Core Machine Learning Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ML%20methods.html"><strong>Popular Machine Learning Methods</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Model%20Optimization.html">Model Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mixed%20Precision%20and%20Quantization.html">Mixed Precision Training and Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="system%20design.html">System Design for Machine Learning Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LLM.html">Large Language Models (LLMs)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Machine Learning Methods in Image Processing</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FImage processing.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Image processing.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Machine Learning Methods in Image Processing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-classification"><strong>1. Image Classification</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview"><strong>Overview</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-1-classifying-handwritten-digits-mnist"><strong>Project 1: Classifying Handwritten Digits (MNIST)</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#object-detection"><strong>2. Object Detection</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Overview</strong>:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#project-2-real-time-object-detection-using-yolo"><strong>Project 2: Real-Time Object Detection Using YOLO</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-segmentation"><strong>3. Image Segmentation</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>Overview</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-3-semantic-segmentation-for-road-scenes"><strong>Project 3: Semantic Segmentation for Road Scenes</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-and-enhancement"><strong>4. Image Denoising and Enhancement</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>Overview</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-5-image-denoising-using-cnns"><strong>Project 5: Image Denoising Using CNNs</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-generation-gans"><strong>5. Image Generation (GANs)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>Overview</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-4-image-generation-with-dcgan"><strong>Project 4: Image Generation with DCGAN</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion-models-for-image-generation">6. <strong>Diffusion Models for Image Generation</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-diffusion-models"><strong>1. What are Diffusion Models?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-diffusion-models-work"><strong>2. How Diffusion Models Work</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-process-diffusion-process"><strong>Forward Process (Diffusion Process)</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reverse-process-denoising-process"><strong>Reverse Process (Denoising Process)</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-objective"><strong>Training Objective</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-of-diffusion-models"><strong>3. Applications of Diffusion Models</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-generation"><strong>1. Image Generation</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-inpainting"><strong>2. Image Inpainting</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#super-resolution"><strong>3. Super-Resolution</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#text-to-image-generation"><strong>4. Text-to-Image Generation</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-with-gans-and-other-generative-models"><strong>4. Comparison with GANs and Other Generative Models</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pros-of-diffusion-models"><strong>Pros of Diffusion Models</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cons-of-diffusion-models"><strong>Cons of Diffusion Models</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-image-generation-using-a-diffusion-model"><strong>5. Project: Image Generation using a Diffusion Model</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#goal"><strong>Goal</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset"><strong>Dataset</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-to-implement-a-diffusion-model"><strong>Steps to Implement a Diffusion Model</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-code-for-a-simple-diffusion-model-pseudo-code"><strong>Sample Code for a Simple Diffusion Model (Pseudo-code)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><strong>Conclusion</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="machine-learning-methods-in-image-processing">
+<h1><strong>Machine Learning Methods in Image Processing</strong><a class="headerlink" href="#machine-learning-methods-in-image-processing" title="Link to this heading">#</a></h1>
+<p>Image processing is one of the most exciting and practical areas in machine learning. In this section, we’ll cover popular <strong>machine learning methods</strong> for image processing, their common use cases, and practical project examples with solutions. These methods range from traditional approaches to more advanced deep learning techniques like <strong>Convolutional Neural Networks (CNNs)</strong>, which have revolutionized the field.</p>
+<p>The key image processing tasks we’ll discuss are:</p>
+<ol class="arabic simple">
+<li><p><strong>Image Classification</strong></p></li>
+<li><p><strong>Object Detection</strong></p></li>
+<li><p><strong>Image Segmentation</strong></p></li>
+<li><p><strong>Image Denoising and Enhancement</strong></p></li>
+<li><p><strong>Image Generation (GANs)</strong></p></li>
+<li><p><strong>Diffusion Models for Image Generation</strong></p></li>
+</ol>
+<hr class="docutils" />
+<section id="image-classification">
+<h2><strong>1. Image Classification</strong><a class="headerlink" href="#image-classification" title="Link to this heading">#</a></h2>
+<section id="overview">
+<h3><strong>Overview</strong>:<a class="headerlink" href="#overview" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Image Classification</strong> is the task of assigning a label to an image from a predefined set of categories. For example, determining whether an image contains a dog, a cat, or a bird.</p></li>
+<li><p><strong>Common Algorithms</strong>: Convolutional Neural Networks (CNNs), Transfer Learning (e.g., using pre-trained models like ResNet, VGG, or EfficientNet).</p></li>
+</ul>
+</section>
+<section id="project-1-classifying-handwritten-digits-mnist">
+<h3><strong>Project 1: Classifying Handwritten Digits (MNIST)</strong><a class="headerlink" href="#project-1-classifying-handwritten-digits-mnist" title="Link to this heading">#</a></h3>
+<p><strong>Goal</strong>: Build a classifier to recognize handwritten digits from the <strong>MNIST</strong> dataset.</p>
+<p><strong>Dataset</strong>: <strong>MNIST</strong> is a large dataset of 28x28 grayscale images of handwritten digits from 0 to 9.</p>
+<p><strong>Solution</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Data Preprocessing</strong>:</p>
+<ul class="simple">
+<li><p>Load the dataset, normalize pixel values (scale to [0,1]), and reshape the images for input into the neural network.</p></li>
+</ul>
+</li>
+<li><p><strong>Modeling</strong>:</p>
+<ul class="simple">
+<li><p>Build a <strong>Convolutional Neural Network (CNN)</strong> architecture with several convolutional layers followed by fully connected layers.</p></li>
+</ul>
+</li>
+<li><p><strong>Training</strong>:</p>
+<ul class="simple">
+<li><p>Train the CNN using <strong>categorical cross-entropy</strong> loss and <strong>Adam optimizer</strong>.</p></li>
+</ul>
+</li>
+<li><p><strong>Evaluation</strong>:</p>
+<ul class="simple">
+<li><p>Use <strong>accuracy</strong> as the evaluation metric.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Sample Code</strong> (Using Keras for simplicity):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">keras.datasets</span> <span class="kn">import</span> <span class="n">mnist</span>
+<span class="kn">from</span> <span class="nn">keras.utils</span> <span class="kn">import</span> <span class="n">to_categorical</span>
+<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Dense</span>
+
+<span class="c1"># Load and preprocess the data</span>
+<span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+
+<span class="c1"># Build CNN model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+    <span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+    <span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+    <span class="n">Flatten</span><span class="p">(),</span>
+    <span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># Compile and train the model</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="object-detection">
+<h2><strong>2. Object Detection</strong><a class="headerlink" href="#object-detection" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3><strong>Overview</strong>:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Object Detection</strong> involves locating objects in an image and identifying them. Unlike classification, object detection predicts bounding boxes and labels for multiple objects in an image.</p></li>
+<li><p><strong>Common Algorithms</strong>: YOLO (You Only Look Once), SSD (Single Shot Detector), Faster R-CNN.</p></li>
+</ul>
+<section id="project-2-real-time-object-detection-using-yolo">
+<h4><strong>Project 2: Real-Time Object Detection Using YOLO</strong><a class="headerlink" href="#project-2-real-time-object-detection-using-yolo" title="Link to this heading">#</a></h4>
+<p><strong>Goal</strong>: Detect objects like cars, people, and animals in real-time video streams or images.</p>
+<p><strong>Dataset</strong>: Use the <strong>COCO dataset</strong> (Common Objects in Context) or a smaller dataset like <strong>Pascal VOC</strong>.</p>
+<p><strong>Solution</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Data Preprocessing</strong>:</p>
+<ul class="simple">
+<li><p>Resize images to fit the YOLO input size (typically 416x416).</p></li>
+<li><p>Load pre-trained weights for YOLO (e.g., using <strong>Darknet</strong> or <strong>YOLOv5</strong>).</p></li>
+</ul>
+</li>
+<li><p><strong>Modeling</strong>:</p>
+<ul class="simple">
+<li><p>Use <strong>YOLOv5</strong> for fast and accurate object detection.</p></li>
+</ul>
+</li>
+<li><p><strong>Training/Fine-Tuning</strong>:</p>
+<ul class="simple">
+<li><p>Fine-tune the model using transfer learning if necessary.</p></li>
+</ul>
+</li>
+<li><p><strong>Inference</strong>:</p>
+<ul class="simple">
+<li><p>Perform real-time object detection on a video stream or image input.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Sample Code</strong> (Using YOLOv5 for real-time detection):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="c1"># Load pre-trained YOLOv5 model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">hub</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;ultralytics/yolov5&#39;</span><span class="p">,</span> <span class="s1">&#39;yolov5s&#39;</span><span class="p">)</span>  <span class="c1"># Use the small version of YOLOv5</span>
+
+<span class="c1"># Perform object detection on an image</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="s1">&#39;image.jpg&#39;</span><span class="p">)</span>
+
+<span class="c1"># Display detection results</span>
+<span class="n">results</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="image-segmentation">
+<h2><strong>3. Image Segmentation</strong><a class="headerlink" href="#image-segmentation" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h3><strong>Overview</strong>:<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Image Segmentation</strong> is the task of dividing an image into multiple segments or classes by labeling each pixel with a category. It’s used for tasks like medical image analysis and autonomous driving.</p></li>
+<li><p><strong>Common Algorithms</strong>: U-Net, Fully Convolutional Networks (FCN), Mask R-CNN.</p></li>
+</ul>
+</section>
+<section id="project-3-semantic-segmentation-for-road-scenes">
+<h3><strong>Project 3: Semantic Segmentation for Road Scenes</strong><a class="headerlink" href="#project-3-semantic-segmentation-for-road-scenes" title="Link to this heading">#</a></h3>
+<p><strong>Goal</strong>: Perform pixel-wise segmentation of different objects on a road scene (e.g., cars, pedestrians, road, sky).</p>
+<p><strong>Dataset</strong>: Use the <strong>Cityscapes dataset</strong>, which contains urban street scenes annotated for semantic segmentation.</p>
+<p><strong>Solution</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Data Preprocessing</strong>:</p>
+<ul class="simple">
+<li><p>Resize the input images and masks.</p></li>
+<li><p>Normalize pixel values and perform data augmentation (rotation, flips).</p></li>
+</ul>
+</li>
+<li><p><strong>Modeling</strong>:</p>
+<ul class="simple">
+<li><p>Use <strong>U-Net</strong>, a popular architecture for segmentation tasks.</p></li>
+</ul>
+</li>
+<li><p><strong>Training</strong>:</p>
+<ul class="simple">
+<li><p>Use <strong>categorical cross-entropy</strong> or <strong>dice loss</strong> as the loss function.</p></li>
+</ul>
+</li>
+<li><p><strong>Evaluation</strong>:</p>
+<ul class="simple">
+<li><p>Use <strong>Intersection over Union (IoU)</strong> as the performance metric.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Sample Code</strong> (U-Net for segmentation):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">UpSampling2D</span><span class="p">,</span> <span class="n">concatenate</span>
+
+<span class="c1"># Define the U-Net architecture</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">Input</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">conv1</span> <span class="o">=</span> <span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">inputs</span><span class="p">)</span>
+<span class="n">pool1</span> <span class="o">=</span> <span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))(</span><span class="n">conv1</span><span class="p">)</span>
+<span class="n">conv2</span> <span class="o">=</span> <span class="n">Conv2D</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">pool1</span><span class="p">)</span>
+<span class="n">pool2</span> <span class="o">=</span> <span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))(</span><span class="n">conv2</span><span class="p">)</span>
+
+<span class="c1"># Bottleneck</span>
+<span class="n">conv3</span> <span class="o">=</span> <span class="n">Conv2D</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">pool2</span><span class="p">)</span>
+
+<span class="c1"># Decoder path</span>
+<span class="n">up4</span> <span class="o">=</span> <span class="n">UpSampling2D</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))(</span><span class="n">conv3</span><span class="p">)</span>
+<span class="n">merge4</span> <span class="o">=</span> <span class="n">concatenate</span><span class="p">([</span><span class="n">conv2</span><span class="p">,</span> <span class="n">up4</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">conv4</span> <span class="o">=</span> <span class="n">Conv2D</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">merge4</span><span class="p">)</span>
+
+<span class="n">up5</span> <span class="o">=</span> <span class="n">UpSampling2D</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))(</span><span class="n">conv4</span><span class="p">)</span>
+<span class="n">merge5</span> <span class="o">=</span> <span class="n">concatenate</span><span class="p">([</span><span class="n">conv1</span><span class="p">,</span> <span class="n">up5</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">conv5</span> <span class="o">=</span> <span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">merge5</span><span class="p">)</span>
+
+<span class="c1"># Final output layer</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">Conv2D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">)(</span><span class="n">conv5</span><span class="p">)</span>
+
+<span class="c1"># Define the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+
+<span class="c1"># Train the model (on image-mask pairs)</span>
+<span class="c1"># model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="image-denoising-and-enhancement">
+<h2><strong>4. Image Denoising and Enhancement</strong><a class="headerlink" href="#image-denoising-and-enhancement" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3><strong>Overview</strong>:<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Image Denoising</strong> is the task of removing noise from an image while preserving important details.</p></li>
+<li><p><strong>Common Algorithms</strong>: Autoencoders, Denoising CNNs.</p></li>
+</ul>
+</section>
+<section id="project-5-image-denoising-using-cnns">
+<h3><strong>Project 5: Image Denoising Using CNNs</strong><a class="headerlink" href="#project-5-image-denoising-using-cnns" title="Link to this heading">#</a></h3>
+<p><strong>Goal</strong>: Build a CNN to denoise grayscale images by removing random noise from them.</p>
+<p><strong>Dataset</strong>: Use <strong>MNIST</strong> or custom datasets with added noise.</p>
+<p><strong>Solution</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Data Preprocessing</strong>:</p>
+<ul class="simple">
+<li><p>Add random noise to the images (e.g., Gaussian noise) to simulate a noisy environment.</p></li>
+</ul>
+</li>
+<li><p><strong>Modeling</strong>:</p>
+<ul class="simple">
+<li><p>Build a <strong>CNN-based Autoencoder</strong> to map noisy images to clean images.</p></li>
+</ul>
+</li>
+<li><p><strong>Training</strong>:</p>
+<ul class="simple">
+<li><p>Use <strong>mean squared error (MSE)</strong> as the loss function for comparing the denoised image with the original image.</p></li>
+</ul>
+</li>
+<li><p><strong>Evaluation</strong>:</p>
+<ul class="simple">
+<li><p>Visually compare the output of the denoising model with the original and noisy images.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Sample Code</strong> (Denoising Autoencoder):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">UpSampling2D</span>
+<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+
+<span class="c1"># Build a simple autoencoder model for denoising</span>
+<span class="n">input_img</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">input_img</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">UpSampling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">decoded</span> <span class="o">=</span> <span class="n">Conv2D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">autoencoder</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">input_img</span><span class="p">,</span> <span class="n">decoded</span><span class="p">)</span>
+<span class="n">autoencoder</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">)</span>
+
+<span class="c1"># Train the model on noisy and clean image pairs</span>
+<span class="c1"># autoencoder.fit(noisy_images, clean_images, epochs=10, batch_size=128)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="image-generation-gans">
+<h2><strong>5. Image Generation (GANs)</strong><a class="headerlink" href="#image-generation-gans" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h3><strong>Overview</strong>:<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Generative Adversarial Networks (GANs)</strong> are used to generate new, realistic images from random noise or based on certain inputs.</p></li>
+<li><p><strong>Common Algorithms</strong>: DCGAN (Deep Convolutional GAN), CycleGAN (for style transfer), Pix2Pix.</p></li>
+</ul>
+</section>
+<section id="project-4-image-generation-with-dcgan">
+<h3><strong>Project 4: Image Generation with DCGAN</strong><a class="headerlink" href="#project-4-image-generation-with-dcgan" title="Link to this heading">#</a></h3>
+<p><strong>Goal</strong>: Generate new images of handwritten digits (or faces) using a <strong>DCGAN</strong>.</p>
+<p><strong>Dataset</strong>: MNIST (for digit generation) or <strong>CelebA</strong> (for generating human faces).</p>
+<p><strong>Solution</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Data Preprocessing</strong>:</p>
+<ul class="simple">
+<li><p>Normalize the images to [-1, 1] to match the DCGAN architecture requirements.</p></li>
+</ul>
+</li>
+<li><p><strong>Modeling</strong>:</p>
+<ul class="simple">
+<li><p>Implement the <strong>generator</strong> and <strong>discriminator</strong> networks as two competing neural networks.</p></li>
+</ul>
+</li>
+<li><p><strong>Training</strong>:</p>
+<ul class="simple">
+<li><p>Train the <strong>generator</strong> to produce images and the <strong>discriminator</strong> to distinguish between real and fake images.</p></li>
+<li><p>Use the <strong>binary cross-entropy</strong> loss function for both the generator and discriminator.</p></li>
+</ul>
+</li>
+<li><p><strong>Evaluation</strong>:</p>
+<ul class="simple">
+<li><p>Generate new images and assess the quality visually.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Sample Code</strong> (DCGAN architecture):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Reshape</span><span class="p">,</span> <span class="n">Conv2DTranspose</span><span class="p">,</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">LeakyReLU</span>
+<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+
+<span class="c1"># Build the generator model</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">Dense</span><span class="p">(</span><span class="mi">128</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,)),</span>
+    <span class="n">Reshape</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">128</span><span class="p">)),</span>
+    <span class="n">Conv2DTranspose</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span>
+
+<span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">Conv2DTranspose</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">Conv2D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># Build the discriminator model</span>
+<span class="n">discriminator</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+    <span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+    <span class="n">Conv2D</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">),</span>
+    <span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+    <span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># Train the GAN with the generator and discriminator</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="diffusion-models-for-image-generation">
+<h2>6. <strong>Diffusion Models for Image Generation</strong><a class="headerlink" href="#diffusion-models-for-image-generation" title="Link to this heading">#</a></h2>
+<p>Diffusion models have recently gained significant attention in the field of image generation, surpassing traditional generative models such as <strong>Generative Adversarial Networks (GANs)</strong> in certain tasks. These models, inspired by <strong>thermodynamics</strong> and <strong>probabilistic diffusion processes</strong>, generate images by iteratively denoising a random noise input into a coherent image.</p>
+<section id="what-are-diffusion-models">
+<h3><strong>1. What are Diffusion Models?</strong><a class="headerlink" href="#what-are-diffusion-models" title="Link to this heading">#</a></h3>
+<p>Diffusion models are <strong>probabilistic generative models</strong> that reverse a <strong>diffusion process</strong> to generate data, typically images. The core idea behind diffusion models is to gradually add noise to an image until it becomes pure noise and then train a model to reverse this process, step by step, to recover the original image.</p>
+<p>The process is inspired by physical diffusion, where particles naturally spread out and mix over time. In image generation, noise (similar to this diffusion process) is incrementally added to an image, and a model learns how to reverse this noise addition, reconstructing the image from noise.</p>
+<p>Key papers like <strong>“Denoising Diffusion Probabilistic Models (DDPMs)”</strong> by Jonathan Ho et al. (2020) have demonstrated the power of diffusion models for generating high-quality images.</p>
+</section>
+<hr class="docutils" />
+<section id="how-diffusion-models-work">
+<h3><strong>2. How Diffusion Models Work</strong><a class="headerlink" href="#how-diffusion-models-work" title="Link to this heading">#</a></h3>
+<section id="forward-process-diffusion-process">
+<h4><strong>Forward Process (Diffusion Process)</strong>:<a class="headerlink" href="#forward-process-diffusion-process" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The <strong>forward process</strong> gradually adds <strong>Gaussian noise</strong> to an image over a series of time steps. After enough steps, the image becomes indistinguishable from random noise.</p></li>
+<li><p>Let’s represent the clean image as <span class="math notranslate nohighlight">\(x_0\)</span>, and as noise is added, it moves through a series of noisy steps <span class="math notranslate nohighlight">\(x_1, x_2, \dots, x_T\)</span>, where <span class="math notranslate nohighlight">\(T\)</span> is the total number of steps.</p></li>
+<li><p>The forward process is represented as:
+$<span class="math notranslate nohighlight">\(
+q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{\alpha_t} x_{t-1}, (1-\alpha_t)I)
+\)</span><span class="math notranslate nohighlight">\(
+where \)</span>\alpha_t<span class="math notranslate nohighlight">\( controls the amount of noise added at each step \)</span>t$.</p></li>
+</ul>
+</section>
+<section id="reverse-process-denoising-process">
+<h4><strong>Reverse Process (Denoising Process)</strong>:<a class="headerlink" href="#reverse-process-denoising-process" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The <strong>reverse process</strong> is what the model learns: recovering the clean image from the noisy image. The model is trained to predict <span class="math notranslate nohighlight">\(x_{t-1}\)</span> from <span class="math notranslate nohighlight">\(x_t\)</span>, i.e., to denoise the image.</p></li>
+<li><p>The reverse process is also Gaussian:
+$<span class="math notranslate nohighlight">\(
+p_\theta(x_{t-1} | x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))
+\)</span><span class="math notranslate nohighlight">\(
+where \)</span>\mu_\theta<span class="math notranslate nohighlight">\( and \)</span>\Sigma_\theta$ are the parameters of the model, learned through training.</p></li>
+</ul>
+</section>
+<section id="training-objective">
+<h4><strong>Training Objective</strong>:<a class="headerlink" href="#training-objective" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The model is trained to minimize the <strong>variational lower bound</strong> (VLB) on the negative log-likelihood of the data, but an equivalent and simplified training objective is to directly predict the noise added in each step of the diffusion process. This formulation resembles a <strong>denoising autoencoder</strong>.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="applications-of-diffusion-models">
+<h3><strong>3. Applications of Diffusion Models</strong><a class="headerlink" href="#applications-of-diffusion-models" title="Link to this heading">#</a></h3>
+<p>Diffusion models are versatile and have been applied in various domains:</p>
+<section id="image-generation">
+<h4><strong>1. Image Generation</strong>:<a class="headerlink" href="#image-generation" title="Link to this heading">#</a></h4>
+<p>Diffusion models have proven highly successful in generating <strong>high-resolution</strong> and <strong>high-fidelity</strong> images. Models like <strong>OpenAI’s DALL-E 2</strong> and <strong>Google’s Imagen</strong> utilize diffusion models for text-to-image generation and have set new standards for image generation quality.</p>
+</section>
+<section id="image-inpainting">
+<h4><strong>2. Image Inpainting</strong>:<a class="headerlink" href="#image-inpainting" title="Link to this heading">#</a></h4>
+<p>Diffusion models can be used for <strong>image inpainting</strong>, where missing parts of an image are filled in by generating new content that matches the context of the surrounding pixels. This is particularly useful in image restoration and editing tasks.</p>
+</section>
+<section id="super-resolution">
+<h4><strong>3. Super-Resolution</strong>:<a class="headerlink" href="#super-resolution" title="Link to this heading">#</a></h4>
+<p>Diffusion models can also be applied to <strong>image super-resolution</strong>, where low-resolution images are upscaled by generating missing details, producing high-quality outputs.</p>
+</section>
+<section id="text-to-image-generation">
+<h4><strong>4. Text-to-Image Generation</strong>:<a class="headerlink" href="#text-to-image-generation" title="Link to this heading">#</a></h4>
+<p>By conditioning the reverse process on text prompts, diffusion models have been used for <strong>text-to-image synthesis</strong>, producing coherent images that align with given textual descriptions.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="comparison-with-gans-and-other-generative-models">
+<h3><strong>4. Comparison with GANs and Other Generative Models</strong><a class="headerlink" href="#comparison-with-gans-and-other-generative-models" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Aspect</strong></p></th>
+<th class="head"><p><strong>Diffusion Models</strong></p></th>
+<th class="head"><p><strong>GANs</strong></p></th>
+<th class="head"><p><strong>VAEs (Variational Autoencoders)</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Training Stability</strong></p></td>
+<td><p>More stable training due to likelihood-based objective</p></td>
+<td><p>Training can be unstable due to adversarial loss</p></td>
+<td><p>Stable training but often lower-quality samples</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Sample Quality</strong></p></td>
+<td><p>High sample quality, often better than GANs</p></td>
+<td><p>High-quality images but may suffer from mode collapse</p></td>
+<td><p>Typically lower quality than GANs and Diffusion models</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Mode Coverage</strong></p></td>
+<td><p>Better mode coverage, more diverse samples</p></td>
+<td><p>Prone to mode collapse (ignoring parts of data distribution)</p></td>
+<td><p>Moderate mode coverage</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Compute Efficiency</strong></p></td>
+<td><p>Computationally expensive due to multi-step process</p></td>
+<td><p>More efficient due to direct generation</p></td>
+<td><p>Less efficient due to latent space sampling</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Interpretability</strong></p></td>
+<td><p>More interpretable due to denoising steps</p></td>
+<td><p>Harder to interpret due to adversarial setup</p></td>
+<td><p>More interpretable due to latent variable framework</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="pros-of-diffusion-models">
+<h3><strong>Pros of Diffusion Models</strong>:<a class="headerlink" href="#pros-of-diffusion-models" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Better Mode Coverage</strong>: Diffusion models are less prone to mode collapse, meaning they generate more diverse and representative samples from the underlying data distribution.</p></li>
+<li><p><strong>High Sample Quality</strong>: They can generate photorealistic images with high fidelity, often outperforming GANs in terms of image quality.</p></li>
+</ul>
+</section>
+<section id="cons-of-diffusion-models">
+<h3><strong>Cons of Diffusion Models</strong>:<a class="headerlink" href="#cons-of-diffusion-models" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Slow Inference</strong>: Since the reverse process involves multiple steps (sometimes hundreds or thousands), generating images can be slow compared to GANs, which produce images in a single forward pass.</p></li>
+<li><p><strong>High Computational Cost</strong>: Both training and inference are computationally expensive due to the iterative nature of the reverse process.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="project-image-generation-using-a-diffusion-model">
+<h3><strong>5. Project: Image Generation using a Diffusion Model</strong><a class="headerlink" href="#project-image-generation-using-a-diffusion-model" title="Link to this heading">#</a></h3>
+<section id="goal">
+<h4><strong>Goal</strong>:<a class="headerlink" href="#goal" title="Link to this heading">#</a></h4>
+<p>Use a diffusion model to generate images from random noise, implementing the forward (diffusion) and reverse (denoising) processes.</p>
+</section>
+<section id="dataset">
+<h4><strong>Dataset</strong>:<a class="headerlink" href="#dataset" title="Link to this heading">#</a></h4>
+<p>Use the <strong>CIFAR-10</strong> or <strong>MNIST</strong> dataset to train the diffusion model. CIFAR-10 is a dataset of 32x32 RGB images across 10 classes (airplanes, cars, birds, etc.), while MNIST contains 28x28 grayscale images of handwritten digits.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="steps-to-implement-a-diffusion-model">
+<h3><strong>Steps to Implement a Diffusion Model</strong><a class="headerlink" href="#steps-to-implement-a-diffusion-model" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Data Preprocessing</strong>:</p>
+<ul class="simple">
+<li><p>Normalize images to the range [0, 1].</p></li>
+<li><p>Add Gaussian noise progressively in the forward process.</p></li>
+</ul>
+</li>
+<li><p><strong>Forward Process (Diffusion Process)</strong>:</p>
+<ul class="simple">
+<li><p>Implement the forward diffusion process by adding Gaussian noise to images over multiple steps. At each step, the image becomes progressively noisier until it becomes pure noise.</p></li>
+</ul>
+</li>
+<li><p><strong>Reverse Process (Denoising Process)</strong>:</p>
+<ul class="simple">
+<li><p>Build a neural network to predict the noise added at each step. This network will be used to denoise the image during the reverse process.</p></li>
+<li><p>The reverse process will iteratively denoise the image, starting from random noise and ending with a generated image.</p></li>
+</ul>
+</li>
+<li><p><strong>Training</strong>:</p>
+<ul class="simple">
+<li><p>Train the model by minimizing the mean squared error (MSE) between the predicted noise and the actual noise added in each step of the forward process.</p></li>
+<li><p>Optionally, condition the reverse process on class labels (e.g., if using CIFAR-10) to generate class-specific images.</p></li>
+</ul>
+</li>
+<li><p><strong>Inference</strong>:</p>
+<ul class="simple">
+<li><p>Start with pure noise and use the trained reverse process to iteratively denoise the image over many steps, generating a new image.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="sample-code-for-a-simple-diffusion-model-pseudo-code">
+<h3><strong>Sample Code for a Simple Diffusion Model (Pseudo-code)</strong><a class="headerlink" href="#sample-code-for-a-simple-diffusion-model-pseudo-code" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Define the model (Denoising Network)</span>
+<span class="k">class</span> <span class="nc">SimpleDenoisingModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SimpleDenoisingModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Output channels = 3 (for RGB images)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Forward process: Add Gaussian noise</span>
+<span class="k">def</span> <span class="nf">forward_diffusion_process</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">alpha_t</span><span class="p">):</span>
+    <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x_0</span><span class="p">)</span>
+    <span class="n">x_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha_t</span><span class="p">)</span> <span class="o">*</span> <span class="n">x_0</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha_t</span><span class="p">)</span> <span class="o">*</span> <span class="n">noise</span>
+    <span class="k">return</span> <span class="n">x_t</span><span class="p">,</span> <span class="n">noise</span>
+
+<span class="c1"># Reverse process: Denoising the image</span>
+<span class="k">def</span> <span class="nf">reverse_process</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x_T</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_T</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">)):</span>
+        <span class="n">noise_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">noise_pred</span>  <span class="c1"># Simplified reverse step (typically involves sampling)</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="c1"># Loss function: Mean Squared Error between predicted and actual noise</span>
+<span class="k">def</span> <span class="nf">loss_fn</span><span class="p">(</span><span class="n">pred_noise</span><span class="p">,</span> <span class="n">true_noise</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()(</span><span class="n">pred_noise</span><span class="p">,</span> <span class="n">true_noise</span><span class="p">)</span>
+
+<span class="c1"># Training loop (simplified)</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span>
+
+<span class="n">_epochs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+        <span class="n">x_0</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]</span>  <span class="c1"># Clean images</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">)</span>  <span class="c1"># Random diffusion step</span>
+        <span class="n">alpha_t</span> <span class="o">=</span> <span class="n">alpha_schedule</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>  <span class="c1"># Predefined noise schedule</span>
+        
+        <span class="c1"># Forward diffusion process</span>
+        <span class="n">x_t</span><span class="p">,</span> <span class="n">true_noise</span> <span class="o">=</span> <span class="n">forward_diffusion_process</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">alpha_t</span><span class="p">)</span>
+        
+        <span class="c1"># Predict the noise added in the forward process</span>
+        <span class="n">pred_noise</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_t</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+        
+        <span class="c1"># Compute loss and update model</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">pred_noise</span><span class="p">,</span> <span class="n">true_noise</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+<span class="c1"># Inference: Generate an image from pure noise</span>
+<span class="n">x_T</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>  <span class="c1"># Start with random noise</span>
+<span class="n">generated_images</span> <span class="o">=</span> <span class="n">reverse_process</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x_T</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="conclusion">
+<h3><strong>Conclusion</strong><a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
+<p>Diffusion models offer a promising alternative to GANs and VAEs for <strong>image generation</strong> and <strong>inpainting</strong> tasks. They generate high-quality and diverse images but can be computationally expensive due to their iterative denoising process. With ongoing research, methods are being developed to accelerate inference, making diffusion models more practical for real-time applications.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="LLM.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Large Language Models (LLMs)</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-classification"><strong>1. Image Classification</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview"><strong>Overview</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-1-classifying-handwritten-digits-mnist"><strong>Project 1: Classifying Handwritten Digits (MNIST)</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#object-detection"><strong>2. Object Detection</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Overview</strong>:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#project-2-real-time-object-detection-using-yolo"><strong>Project 2: Real-Time Object Detection Using YOLO</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-segmentation"><strong>3. Image Segmentation</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>Overview</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-3-semantic-segmentation-for-road-scenes"><strong>Project 3: Semantic Segmentation for Road Scenes</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-and-enhancement"><strong>4. Image Denoising and Enhancement</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>Overview</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-5-image-denoising-using-cnns"><strong>Project 5: Image Denoising Using CNNs</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-generation-gans"><strong>5. Image Generation (GANs)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>Overview</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-4-image-generation-with-dcgan"><strong>Project 4: Image Generation with DCGAN</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion-models-for-image-generation">6. <strong>Diffusion Models for Image Generation</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-diffusion-models"><strong>1. What are Diffusion Models?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-diffusion-models-work"><strong>2. How Diffusion Models Work</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-process-diffusion-process"><strong>Forward Process (Diffusion Process)</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reverse-process-denoising-process"><strong>Reverse Process (Denoising Process)</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-objective"><strong>Training Objective</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-of-diffusion-models"><strong>3. Applications of Diffusion Models</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-generation"><strong>1. Image Generation</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-inpainting"><strong>2. Image Inpainting</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#super-resolution"><strong>3. Super-Resolution</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#text-to-image-generation"><strong>4. Text-to-Image Generation</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-with-gans-and-other-generative-models"><strong>4. Comparison with GANs and Other Generative Models</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pros-of-diffusion-models"><strong>Pros of Diffusion Models</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cons-of-diffusion-models"><strong>Cons of Diffusion Models</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-image-generation-using-a-diffusion-model"><strong>5. Project: Image Generation using a Diffusion Model</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#goal"><strong>Goal</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset"><strong>Dataset</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-to-implement-a-diffusion-model"><strong>Steps to Implement a Diffusion Model</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-code-for-a-simple-diffusion-model-pseudo-code"><strong>Sample Code for a Simple Diffusion Model (Pseudo-code)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><strong>Conclusion</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Qiang Hu, AI assistant
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
