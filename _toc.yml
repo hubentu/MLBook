@@ -6,6 +6,7 @@ root: intro
 chapters:
 - file: Core ML concepts
 - file: ML methods
+- file: Deep Learning
 - file: Model Optimization
 - file: Mixed Precision and Quantization
 - file: system design

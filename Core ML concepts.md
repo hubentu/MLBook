@@ -1,6 +1,129 @@
 # Core Machine Learning Concepts
 To begin, let’s make sure you’re comfortable with the core machine learning concepts that are fundamental for any machine learning engineering role. This includes understanding different types of machine learning, model evaluation metrics, and optimization techniques.
 
+## 1. **Supervised, Unsupervised, and Reinforcement Learning**
+
+### **Supervised Learning**
+- **Definition:** In supervised learning, the algorithm learns from a labeled dataset, meaning each training example is paired with an output label. The goal is to learn a mapping from input features to the output label.
+- **Common Algorithms:**
+  - **Linear/Logistic Regression**
+  - **Decision Trees**
+  - **Support Vector Machines (SVMs)**
+  - **Neural Networks**
+- **Real-World Example:**
+  - Predicting house prices based on features such as size, location, and number of bedrooms (Regression).
+  - Classifying whether an email is spam or not (Classification).
+  
+### **Unsupervised Learning**
+- **Definition:** The model learns patterns from an unlabeled dataset, where there are no explicit outputs provided. The goal is often to find hidden structures in the data.
+- **Common Algorithms:**
+  - **K-means Clustering**
+  - **Principal Component Analysis (PCA)**
+  - **Hierarchical Clustering**
+- **Real-World Example:**
+  - Grouping customers based on purchasing behavior for targeted marketing (Clustering).
+  - Dimensionality reduction for visualizing high-dimensional data (PCA).
+
+
+### **Reinforcement Learning**
+- **Definition:** An agent learns by interacting with an environment, receiving rewards or penalties for its actions. The goal is to learn a policy that maximizes cumulative reward.
+- **Common Algorithms:**
+  - **Q-Learning**
+  - **Deep Q Networks (DQN)**
+  - **Proximal Policy Optimization (PPO)**
+- **Real-World Example:**
+  - Teaching a robot to walk by giving it positive reinforcement when it moves correctly.
+  - Training a model to play games like chess or Go (AlphaGo).
+
+
+## 2. **Model Evaluation Metrics**
+
+### **Classification Metrics:**
+- **Accuracy:** Percentage of correct predictions over total predictions.
+- **Precision:** The proportion of true positives among all positive predictions.
+- **Recall:** The proportion of true positives among all actual positives.
+- **F1 Score:** The harmonic mean of precision and recall, used when there is an uneven class distribution.
+- **ROC-AUC (Receiver Operating Characteristic - Area Under Curve):** A measure of a model's ability to distinguish between classes.
+
+### **Regression Metrics:**
+- **Mean Absolute Error (MAE):** The average of absolute differences between predicted and actual values.
+- **Mean Squared Error (MSE):** The average of the squared differences between predicted and actual values.
+- **R² (Coefficient of Determination):** How well the regression line explains the variance in the data.
+
+
+## 3. **Bias-Variance Tradeoff**
+
+### **Bias:** 
+- Error due to the model being too simple and unable to capture the underlying patterns in the data (underfitting).
+  
+### **Variance:**
+- Error due to the model being too complex and capturing noise in the training data (overfitting).
+
+### **Bias-Variance Tradeoff:**
+- **Goal:** Achieve a balance between bias and variance to minimize total error.
+- **Solutions:**
+  - **For high bias:** Increase model complexity (e.g., adding more features, using a more sophisticated model).
+  - **For high variance:** Regularization (L1, L2), cross-validation, or reducing model complexity.
+
+
+## 4. **Regularization Techniques**
+
+### **L1 Regularization (Lasso):**
+- Adds a penalty proportional to the absolute value of the coefficients.
+- **Effect:** Drives some feature coefficients to zero, effectively performing feature selection.
+
+### **L2 Regularization (Ridge):**
+- Adds a penalty proportional to the square of the coefficients.
+- **Effect:** Shrinks the magnitude of the coefficients but does not eliminate any features.
+
+### **Elastic Net:**
+- A combination of L1 and L2 regularization.
+- **Effect:** Provides both shrinkage and feature selection.
+
+
+## 5. **Optimization Algorithms**
+
+### **Gradient Descent:**
+- **Definition:** An iterative optimization algorithm used to minimize a loss function by updating model parameters in the opposite direction of the gradient.
+- **Variants:**
+  - **Batch Gradient Descent:** Uses the entire dataset to compute gradients at each step.
+  - **Stochastic Gradient Descent (SGD):** Uses a single data point at each step, faster but noisier.
+  - **Mini-batch Gradient Descent:** A compromise, using a small batch of data points.
+  
+### **Adam Optimizer (Adaptive Moment Estimation):**
+- Combines the advantages of AdaGrad and RMSProp, adapting the learning rate for each parameter.
+- Widely used in deep learning due to its faster convergence and better performance in sparse gradients.
+
+
+## 6. **Cross-Validation**
+
+### **K-Fold Cross-Validation:**
+- **Definition:** The data is split into K subsets, and the model is trained K times, each time using a different subset as the validation set and the others for training.
+- **Purpose:** To prevent overfitting and give a more reliable estimate of model performance.
+
+### **Leave-One-Out Cross-Validation (LOO):**
+- Similar to K-fold, but K is set to the number of data points. Each data point is used once as the validation set.
+
+
+## 7. **Overfitting and Underfitting**
+
+### **Overfitting:**
+- A model performs well on training data but poorly on unseen data.
+- **Causes:** Too complex models, too many parameters, insufficient training data.
+- **Solutions:**
+  - Cross-validation
+  - Regularization
+  - Simplifying the model
+  - Early stopping in neural networks
+  
+### **Underfitting:**
+- A model is too simple to capture the underlying structure of the data.
+- **Causes:** Model too simple, insufficient features, poor training.
+- **Solutions:**
+  - Increase model complexity
+  - Add more features
+  - Use a more sophisticated model
+
 ## Question 1: Supervised Learning Basics
 
 Scenario:
