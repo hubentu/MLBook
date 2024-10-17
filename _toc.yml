@@ -12,3 +12,5 @@ chapters:
 - file: system design
 - file: LLM
 - file: Image processing
+- file: Recommendation system
+- file: Time Series

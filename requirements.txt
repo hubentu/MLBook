@@ -1,3 +1,11 @@
 jupyter-book
 matplotlib
+seaborn
 numpy
+pandas
+yfinance
+torch
+imblearn
+statsmodels
+tensorflow
+yfinance

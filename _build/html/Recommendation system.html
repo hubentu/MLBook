@@ -1,0 +1,1193 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Recommendation Systems: Overview and Methods &#8212; Machine Learning Notebook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Recommendation system';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Machine Learning Methods in Image Processing" href="Image%20processing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/mlb.png" class="logo__image only-light" alt="Machine Learning Notebook - Home"/>
+    <script>document.write(`<img src="_static/mlb.png" class="logo__image only-dark" alt="Machine Learning Notebook - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Machine Learning notebook
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Core%20ML%20concepts.html">Core Machine Learning Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ML%20methods.html"><strong>Machine Learning Methods</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Deep%20Learning.html">Neural Networks and Deep Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Model%20Optimization.html">Model Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mixed%20Precision%20and%20Quantization.html">Mixed Precision Training and Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="system%20design.html">System Design for Machine Learning Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LLM.html">Large Language Models (LLMs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Image%20processing.html"><strong>Machine Learning Methods in Image Processing</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Recommendation Systems: Overview and Methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FRecommendation system.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Recommendation system.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Recommendation Systems: Overview and Methods</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-recommendation-systems"><strong>1. Types of Recommendation Systems</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filtering-cf"><strong>1.1. Collaborative Filtering (CF)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#content-based-filtering"><strong>1.2. Content-Based Filtering</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-recommendation-systems"><strong>1.3. Hybrid Recommendation Systems</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#knowledge-based-systems"><strong>1.4. Knowledge-Based Systems</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#popular-algorithms-and-techniques"><strong>2. Popular Algorithms and Techniques</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filtering"><strong>2.1. Collaborative Filtering</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>2.2. Content-Based Filtering</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-methods"><strong>2.3. Hybrid Methods</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches"><strong>2.4. Deep Learning Approaches</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics-for-recommendation-systems"><strong>3. Evaluation Metrics for Recommendation Systems</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-building-a-movie-recommendation-system"><strong>4. Project: Building a Movie Recommendation System</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-solution"><strong>Step-by-Step Solution</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing"><strong>1. Data Preprocessing</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis-eda"><strong>2. Exploratory Data Analysis (EDA)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-factorization-using-svd-singular-value-decomposition"><strong>3. Matrix Factorization using SVD (Singular Value Decomposition)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-the-recommendation-system"><strong>4. Implementing the Recommendation System</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation"><strong>5. Evaluation</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-techniques-in-recommendation-systems"><strong>5. Advanced Techniques in Recommendation Systems</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-collaborative-filtering-ncf"><strong>1. Neural Collaborative Filtering (NCF)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autoencoders-for-collaborative-filtering"><strong>2. Autoencoders for Collaborative Filtering</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sequence-based-and-context-aware-recommendations"><strong>3. Sequence-Based and Context-Aware Recommendations</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-systems"><strong>4. Hybrid Systems</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-hybrid-recommendation-system-collaborative-content-based"><strong>Example: Hybrid Recommendation System (Collaborative + Content-Based)</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-based-approaches-for-recommendation-systems">6. <strong>Deep Learning-Based Approaches for Recommendation Systems</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>1. Neural Collaborative Filtering (NCF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#overview"><strong>Overview</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works"><strong>How It Works</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#architecture"><strong>Architecture</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-neural-collaborative-filtering-in-pytorch"><strong>Code Example: Neural Collaborative Filtering in PyTorch</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-ncf"><strong>Advantages of NCF</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>2. Autoencoders for Collaborative Filtering</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>Overview</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>How It Works</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>Architecture</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-autoencoder-for-collaborative-filtering"><strong>Code Example: Autoencoder for Collaborative Filtering</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-autoencoders"><strong>Advantages of Autoencoders</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-for-content-based-recommendations"><strong>3. Deep Learning for Content-Based Recommendations</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><strong>How It Works</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><strong>Architecture</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-movie-recommendation-using-content-descriptions-and-user-ratings"><strong>Example</strong>: Movie Recommendation Using Content Descriptions and User Ratings</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-content-based-deep-learning"><strong>Advantages of Content-Based Deep Learning</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-models-rnns-and-transformers"><strong>4. Sequential Models (RNNs and Transformers)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><strong>Overview</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10"><strong>How It Works</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11"><strong>Architecture</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-sequential-model-for-session-based-recommendation-using-rnns"><strong>Code Example: Sequential Model for Session-Based Recommendation Using RNNs</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-sequential-models"><strong>Advantages of Sequential Models</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-techniques"><strong>5. Advanced Techniques</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#factorization-machines-with-deep-learning-deepfm"><strong>Factorization Machines with Deep Learning (DeepFM)</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#attention-mechanisms"><strong>Attention Mechanisms</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><strong>Conclusion</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="recommendation-systems-overview-and-methods">
+<h1>Recommendation Systems: Overview and Methods<a class="headerlink" href="#recommendation-systems-overview-and-methods" title="Link to this heading">#</a></h1>
+<p>Recommendation systems are essential for many modern applications, from streaming platforms like <strong>Netflix</strong> and <strong>YouTube</strong> to e-commerce sites like <strong>Amazon</strong>. They help provide personalized recommendations to users, enhancing user experience and increasing engagement and sales. In this section, we’ll cover:</p>
+<ol class="arabic simple">
+<li><p><strong>Types of Recommendation Systems</strong></p></li>
+<li><p><strong>Popular Algorithms and Techniques</strong></p></li>
+<li><p><strong>Evaluation Metrics for Recommendation Systems</strong></p></li>
+<li><p><strong>Project: Building a Recommendation System</strong></p></li>
+<li><p><strong>Advanced Techniques in Recommendation Systems</strong></p></li>
+</ol>
+<hr class="docutils" />
+<section id="types-of-recommendation-systems">
+<h2><strong>1. Types of Recommendation Systems</strong><a class="headerlink" href="#types-of-recommendation-systems" title="Link to this heading">#</a></h2>
+<p>There are several types of recommendation systems, each suited for different scenarios:</p>
+<section id="collaborative-filtering-cf">
+<h3><strong>1.1. Collaborative Filtering (CF)</strong><a class="headerlink" href="#collaborative-filtering-cf" title="Link to this heading">#</a></h3>
+<p>Collaborative Filtering is based on user behavior and similarities between users or items. It assumes that users who agreed on the past will agree again in the future.</p>
+<ul class="simple">
+<li><p><strong>User-Based CF</strong>: Recommends items based on the preferences of similar users.</p></li>
+<li><p><strong>Item-Based CF</strong>: Recommends items that are similar to the items a user has liked in the past.</p></li>
+</ul>
+</section>
+<section id="content-based-filtering">
+<h3><strong>1.2. Content-Based Filtering</strong><a class="headerlink" href="#content-based-filtering" title="Link to this heading">#</a></h3>
+<p>This approach recommends items based on their content and the user’s profile. For example, if a user has liked action movies, the system recommends other action movies based on genre, actors, or directors.</p>
+</section>
+<section id="hybrid-recommendation-systems">
+<h3><strong>1.3. Hybrid Recommendation Systems</strong><a class="headerlink" href="#hybrid-recommendation-systems" title="Link to this heading">#</a></h3>
+<p>Hybrid systems combine multiple approaches (e.g., collaborative filtering + content-based filtering) to provide more robust and accurate recommendations.</p>
+</section>
+<section id="knowledge-based-systems">
+<h3><strong>1.4. Knowledge-Based Systems</strong><a class="headerlink" href="#knowledge-based-systems" title="Link to this heading">#</a></h3>
+<p>These systems use domain-specific knowledge about users and items to recommend products. For example, recommending a vacation package based on user preferences and constraints.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="popular-algorithms-and-techniques">
+<h2><strong>2. Popular Algorithms and Techniques</strong><a class="headerlink" href="#popular-algorithms-and-techniques" title="Link to this heading">#</a></h2>
+<section id="collaborative-filtering">
+<h3><strong>2.1. Collaborative Filtering</strong><a class="headerlink" href="#collaborative-filtering" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Matrix Factorization</strong> (e.g., SVD, ALS)</p>
+<ul class="simple">
+<li><p>Matrix factorization decomposes the user-item interaction matrix into lower-dimensional latent factors, representing user and item features.</p></li>
+<li><p>Algorithms like <strong>Singular Value Decomposition (SVD)</strong> and <strong>Alternating Least Squares (ALS)</strong> are commonly used for this.</p></li>
+</ul>
+</li>
+<li><p><strong>Neighborhood-Based Methods</strong> (User-User or Item-Item)</p>
+<ul class="simple">
+<li><p>These methods calculate similarity scores (e.g., cosine similarity, Pearson correlation) between users or items and make predictions based on neighbors.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="id1">
+<h3><strong>2.2. Content-Based Filtering</strong><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Uses item features (e.g., genre, tags, keywords) and matches them with the user’s profile (e.g., history of likes).</p></li>
+<li><p><strong>TF-IDF</strong> or <strong>word embeddings</strong> (e.g., Word2Vec) are often used for text-based content representation.</p></li>
+</ul>
+</section>
+<section id="hybrid-methods">
+<h3><strong>2.3. Hybrid Methods</strong><a class="headerlink" href="#hybrid-methods" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Weighted Hybrid</strong>: Combines predictions from collaborative and content-based models by assigning weights to each method.</p></li>
+<li><p><strong>Model-Based Hybrid</strong>: Incorporates both collaborative and content-based features into a unified model (e.g., neural collaborative filtering).</p></li>
+</ul>
+</section>
+<section id="deep-learning-approaches">
+<h3><strong>2.4. Deep Learning Approaches</strong><a class="headerlink" href="#deep-learning-approaches" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Neural Collaborative Filtering (NCF)</strong>: Uses neural networks to model complex interactions between users and items.</p></li>
+<li><p><strong>Autoencoders</strong>: Used for dimensionality reduction and filling missing entries in the user-item matrix.</p></li>
+<li><p><strong>Sequence-Based Models</strong>: RNNs and Transformers can model user behavior sequences for session-based recommendations.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="evaluation-metrics-for-recommendation-systems">
+<h2><strong>3. Evaluation Metrics for Recommendation Systems</strong><a class="headerlink" href="#evaluation-metrics-for-recommendation-systems" title="Link to this heading">#</a></h2>
+<p>Measuring the performance of a recommendation system is crucial. Common evaluation metrics include:</p>
+<ul class="simple">
+<li><p><strong>Precision&#64;K</strong>: The fraction of relevant items in the top K recommended items.</p></li>
+<li><p><strong>Recall&#64;K</strong>: The fraction of relevant items recovered in the top K recommendations.</p></li>
+<li><p><strong>Mean Absolute Error (MAE)</strong> / <strong>Root Mean Squared Error (RMSE)</strong>: Measures the difference between the predicted and actual ratings in rating-based systems.</p></li>
+<li><p><strong>Hit Rate (HR)</strong>: The percentage of users who receive at least one relevant recommendation.</p></li>
+<li><p><strong>NDCG (Normalized Discounted Cumulative Gain)</strong>: Evaluates the ranking quality by taking the order of items into account.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="project-building-a-movie-recommendation-system">
+<h2><strong>4. Project: Building a Movie Recommendation System</strong><a class="headerlink" href="#project-building-a-movie-recommendation-system" title="Link to this heading">#</a></h2>
+<p>Let’s go through a practical example where we build a <strong>movie recommendation system</strong> using the <strong>MovieLens dataset</strong>, which contains user ratings for various movies.</p>
+<p><strong>Goal</strong>: Recommend movies to users based on their preferences using collaborative filtering and matrix factorization.</p>
+<p><strong>Dataset</strong>: The <strong>MovieLens 100K dataset</strong> contains 100,000 ratings from 943 users on 1,682 movies. It’s publicly available and can be downloaded from <a class="reference external" href="https://grouplens.org/datasets/movielens/">MovieLens</a>.</p>
+</section>
+<hr class="docutils" />
+<section id="step-by-step-solution">
+<h2><strong>Step-by-Step Solution</strong><a class="headerlink" href="#step-by-step-solution" title="Link to this heading">#</a></h2>
+<section id="data-preprocessing">
+<h3><strong>1. Data Preprocessing</strong><a class="headerlink" href="#data-preprocessing" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Load the dataset, and convert it into a user-item matrix where rows represent users, columns represent movies, and values are ratings.</p></li>
+<li><p>Normalize ratings if necessary (e.g., subtract the mean rating for each user).</p></li>
+</ul>
+</section>
+<section id="exploratory-data-analysis-eda">
+<h3><strong>2. Exploratory Data Analysis (EDA)</strong><a class="headerlink" href="#exploratory-data-analysis-eda" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Analyze the distribution of ratings, the sparsity of the user-item matrix, and identify the most-rated movies and the most active users.</p></li>
+</ul>
+</section>
+<section id="matrix-factorization-using-svd-singular-value-decomposition">
+<h3><strong>3. Matrix Factorization using SVD (Singular Value Decomposition)</strong><a class="headerlink" href="#matrix-factorization-using-svd-singular-value-decomposition" title="Link to this heading">#</a></h3>
+<p>SVD decomposes the user-item matrix <span class="math notranslate nohighlight">\(R\)</span> into three matrices:
+$<span class="math notranslate nohighlight">\(
+R \approx U \Sigma V^T
+\)</span>$
+Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(U\)</span> represents the user feature matrix.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma\)</span> is a diagonal matrix of singular values.</p></li>
+<li><p><span class="math notranslate nohighlight">\(V^T\)</span> is the item feature matrix.</p></li>
+</ul>
+</section>
+<section id="implementing-the-recommendation-system">
+<h3><strong>4. Implementing the Recommendation System</strong><a class="headerlink" href="#implementing-the-recommendation-system" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse.linalg</span> <span class="kn">import</span> <span class="n">svds</span>
+
+<span class="c1"># Load dataset</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;movielens-100k/ratings.csv&#39;</span><span class="p">)</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;https://github.com/MohammedAlawami/Movielens-Dataset/raw/refs/heads/master/datasets/ratings.dat&#39;</span><span class="p">,</span>
+    <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;::&#39;</span><span class="p">,</span>
+    <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;userId&#39;</span><span class="p">,</span><span class="s1">&#39;movieId&#39;</span><span class="p">,</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="s1">&#39;Timestamp&#39;</span><span class="p">],</span>
+    <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Timestamp&#39;</span><span class="p">],</span>
+    <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="p">,</span>
+    <span class="n">header</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+
+<span class="c1"># Create user-item matrix</span>
+<span class="n">user_item_matrix_df</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;userId&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;movieId&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;rating&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">user_item_matrix</span> <span class="o">=</span> <span class="n">user_item_matrix_df</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># Normalize user-item matrix</span>
+<span class="n">user_ratings_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">user_item_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">R_demeaned</span> <span class="o">=</span> <span class="n">user_item_matrix</span> <span class="o">-</span> <span class="n">user_ratings_mean</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Apply SVD</span>
+<span class="n">U</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">svds</span><span class="p">(</span><span class="n">R_demeaned</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+
+<span class="c1"># Reconstruct the user-item matrix</span>
+<span class="n">predicted_ratings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> <span class="n">Vt</span><span class="p">)</span> <span class="o">+</span> <span class="n">user_ratings_mean</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">predicted_ratings_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">predicted_ratings</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">user_item_matrix_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="c1"># Recommend movies for a specific user</span>
+<span class="k">def</span> <span class="nf">recommend_movies</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">num_recommendations</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">user_row_number</span> <span class="o">=</span> <span class="n">user_id</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># Adjust for zero-indexing</span>
+    <span class="n">sorted_user_ratings</span> <span class="o">=</span> <span class="n">predicted_ratings_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">user_row_number</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">recommended_movie_ids</span> <span class="o">=</span> <span class="n">sorted_user_ratings</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span><span class="n">num_recommendations</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">recommended_movie_ids</span>
+
+<span class="c1"># Example: Recommend movies for user 1</span>
+<span class="n">recommend_movies</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_recommendations</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="evaluation">
+<h3><strong>5. Evaluation</strong><a class="headerlink" href="#evaluation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Split the data into a training set and a test set.</p></li>
+<li><p>Evaluate the model using <strong>RMSE</strong> to see how well it predicts unseen ratings.</p></li>
+<li><p>Additionally, use metrics like <strong>Precision&#64;K</strong> and <strong>Recall&#64;K</strong> to measure the relevance of the top recommended items.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="advanced-techniques-in-recommendation-systems">
+<h2><strong>5. Advanced Techniques in Recommendation Systems</strong><a class="headerlink" href="#advanced-techniques-in-recommendation-systems" title="Link to this heading">#</a></h2>
+<section id="neural-collaborative-filtering-ncf">
+<h3><strong>1. Neural Collaborative Filtering (NCF)</strong><a class="headerlink" href="#neural-collaborative-filtering-ncf" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>NCF</strong> models user-item interactions using neural networks to capture complex, non-linear patterns.</p></li>
+<li><p>Combines user and item embeddings and feeds them into a multi-layer perceptron (MLP) for prediction.</p></li>
+</ul>
+</section>
+<section id="autoencoders-for-collaborative-filtering">
+<h3><strong>2. Autoencoders for Collaborative Filtering</strong><a class="headerlink" href="#autoencoders-for-collaborative-filtering" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Autoencoders</strong> can be used to reconstruct the user-item matrix, filling in missing values (unrated items) by learning a low-dimensional representation of users and items.</p></li>
+</ul>
+</section>
+<section id="sequence-based-and-context-aware-recommendations">
+<h3><strong>3. Sequence-Based and Context-Aware Recommendations</strong><a class="headerlink" href="#sequence-based-and-context-aware-recommendations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Recurrent Neural Networks (RNNs)</strong> and <strong>Transformers</strong> can model user behavior sequences (e.g., click streams) to make real-time, session-based recommendations.</p></li>
+<li><p><strong>Context-Aware Recommender Systems</strong> consider additional information like time of day, location, and user mood to personalize recommendations further.</p></li>
+</ul>
+</section>
+<section id="hybrid-systems">
+<h3><strong>4. Hybrid Systems</strong><a class="headerlink" href="#hybrid-systems" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Build hybrid models that integrate collaborative filtering, content-based filtering, and deep learning approaches to maximize performance and flexibility.</p></li>
+<li><p>For instance, use a weighted combination of content similarity scores and collaborative filtering scores to make recommendations that balance both user behavior and item characteristics.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="example-hybrid-recommendation-system-collaborative-content-based">
+<h2><strong>Example: Hybrid Recommendation System (Collaborative + Content-Based)</strong><a class="headerlink" href="#example-hybrid-recommendation-system-collaborative-content-based" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example combining collaborative filtering (matrix factorization) and content-based filtering</span>
+
+<span class="k">def</span> <span class="nf">hybrid_recommend</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">num_recommendations</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="c1"># Step 1: Collaborative Filtering Score</span>
+    <span class="n">collaborative_scores</span> <span class="o">=</span> <span class="n">predicted_ratings_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">user_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    
+    <span class="c1"># Step 2: Content-Based Score</span>
+    <span class="c1"># (Assume we have a function content_based_score that returns a similarity score for each movie)</span>
+    <span class="n">content_scores</span> <span class="o">=</span> <span class="n">content_based_score</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+    
+    <span class="c1"># Step 3: Weighted Combination</span>
+    <span class="n">combined_score</span> <span class="o">=</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="n">collaborative_scores</span> <span class="o">+</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="n">content_scores</span>
+    
+    <span class="c1"># Step 4: Get top recommendations</span>
+    <span class="n">recommended_movie_ids</span> <span class="o">=</span> <span class="n">combined_score</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span><span class="n">num_recommendations</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">recommended_movie_ids</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">hybrid_recommend</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_recommendations</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="deep-learning-based-approaches-for-recommendation-systems">
+<h2>6. <strong>Deep Learning-Based Approaches for Recommendation Systems</strong><a class="headerlink" href="#deep-learning-based-approaches-for-recommendation-systems" title="Link to this heading">#</a></h2>
+<p>Deep learning-based recommendation systems have become highly popular due to their ability to model complex, non-linear interactions between users and items. These systems leverage deep neural networks to capture hidden patterns, model sequential behaviors, and handle large-scale data efficiently. In this section, we’ll explore several deep learning approaches used in recommendation systems, including:</p>
+<ol class="arabic simple">
+<li><p><strong>Neural Collaborative Filtering (NCF)</strong></p></li>
+<li><p><strong>Autoencoders for Collaborative Filtering</strong></p></li>
+<li><p><strong>Deep Learning for Content-Based Recommendations</strong></p></li>
+<li><p><strong>Sequential Models (RNNs and Transformers)</strong></p></li>
+<li><p><strong>Advanced Techniques (Factorization Machines, Attention Mechanisms)</strong></p></li>
+</ol>
+<p>For each method, we’ll describe its purpose, how it works, and provide practical examples with code.</p>
+<hr class="docutils" />
+<section id="id2">
+<h3><strong>1. Neural Collaborative Filtering (NCF)</strong><a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="overview">
+<h4><strong>Overview</strong>:<a class="headerlink" href="#overview" title="Link to this heading">#</a></h4>
+<p>Neural Collaborative Filtering (NCF) is a deep learning framework that generalizes traditional <strong>Matrix Factorization (MF)</strong> by replacing the dot product used in MF with a deep neural network that can model complex interactions between users and items.</p>
+</section>
+<section id="how-it-works">
+<h4><strong>How It Works</strong>:<a class="headerlink" href="#how-it-works" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Embedding Layers</strong>: Each user and item is represented as an embedding vector (latent factors), similar to matrix factorization.</p></li>
+<li><p><strong>Multi-Layer Perceptron (MLP)</strong>: The user and item embeddings are concatenated and fed into a deep neural network (MLP). This allows the model to learn non-linear patterns in user-item interactions.</p></li>
+<li><p><strong>Output Layer</strong>: The final layer outputs a predicted rating or ranking score, depending on the task.</p></li>
+</ul>
+</section>
+<section id="architecture">
+<h4><strong>Architecture</strong>:<a class="headerlink" href="#architecture" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>User Embedding</strong>: Maps user IDs to a dense vector (embedding).</p></li>
+<li><p><strong>Item Embedding</strong>: Maps item IDs to a dense vector (embedding).</p></li>
+<li><p><strong>Concatenation</strong>: The embeddings are concatenated, and the result is passed through multiple fully connected layers.</p></li>
+<li><p><strong>Prediction</strong>: A final layer outputs the prediction (e.g., rating or relevance score).</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="code-example-neural-collaborative-filtering-in-pytorch">
+<h4><strong>Code Example: Neural Collaborative Filtering in PyTorch</strong><a class="headerlink" href="#code-example-neural-collaborative-filtering-in-pytorch" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+
+<span class="k">class</span> <span class="nc">NCF</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_users</span><span class="p">,</span> <span class="n">num_items</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">,</span> <span class="n">hidden_layers</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NCF</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_users</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_items</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">)</span>
+        
+        <span class="c1"># Fully connected layers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc_layers</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+        <span class="n">input_size</span> <span class="o">=</span> <span class="n">embedding_size</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># user + item embedding concatenated</span>
+        <span class="k">for</span> <span class="n">hidden_size</span> <span class="ow">in</span> <span class="n">hidden_layers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fc_layers</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fc</span><span class="si">{</span><span class="n">hidden_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fc_layers</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;relu</span><span class="si">{</span><span class="n">hidden_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
+            <span class="n">input_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+        
+        <span class="c1"># Output layer (for regression tasks)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">item_id</span><span class="p">):</span>
+        <span class="n">user_embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_embedding</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="n">item_embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_embedding</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">user_embedding</span><span class="p">,</span> <span class="n">item_embedding</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Concatenate embeddings</span>
+        
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc_layers</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># Pass through MLP</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># Output the final prediction</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+<span class="c1"># Example usage:</span>
+<span class="n">num_users</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">num_items</span> <span class="o">=</span> <span class="mi">1500</span>
+<span class="n">embedding_size</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">hidden_layers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">32</span><span class="p">]</span>
+
+<span class="c1"># Initialize the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">NCF</span><span class="p">(</span><span class="n">num_users</span><span class="p">,</span> <span class="n">num_items</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">,</span> <span class="n">hidden_layers</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>  <span class="c1"># For rating prediction tasks</span>
+
+<span class="c1"># Training loop (simplified)</span>
+<span class="n">user_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">item_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">([</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">user_ids</span><span class="p">,</span> <span class="n">item_ids</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">ratings</span><span class="p">)</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="advantages-of-ncf">
+<h4><strong>Advantages of NCF</strong>:<a class="headerlink" href="#advantages-of-ncf" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Non-linearity</strong>: NCF can model non-linear interactions between users and items, unlike traditional matrix factorization that relies on linear dot products.</p></li>
+<li><p><strong>Flexibility</strong>: It can easily be extended to handle additional side information (e.g., user demographics or item features).</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id3">
+<h3><strong>2. Autoencoders for Collaborative Filtering</strong><a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h4><strong>Overview</strong>:<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<p>Autoencoders are used to reconstruct the input data by learning a compressed latent representation of the user-item interactions. This is useful for collaborative filtering tasks, where the autoencoder learns to predict missing values in the user-item matrix.</p>
+</section>
+<section id="id5">
+<h4><strong>How It Works</strong>:<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Encoder</strong>: Maps the user-item interaction vector (e.g., ratings) to a compressed latent space.</p></li>
+<li><p><strong>Decoder</strong>: Reconstructs the user-item interaction from the latent space, filling in missing ratings.</p></li>
+<li><p><strong>Loss</strong>: The reconstruction loss (typically mean squared error) is minimized during training.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h4><strong>Architecture</strong>:<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Input Layer</strong>: A vector representing a user’s ratings for all items (with missing entries as zeros or placeholders).</p></li>
+<li><p><strong>Hidden Layers</strong>: Dense layers that gradually compress the input.</p></li>
+<li><p><strong>Output Layer</strong>: A reconstructed vector of ratings.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="code-example-autoencoder-for-collaborative-filtering">
+<h4><strong>Code Example: Autoencoder for Collaborative Filtering</strong><a class="headerlink" href="#code-example-autoencoder-for-collaborative-filtering" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Autoencoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_items</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Autoencoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_items</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>
+        <span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="n">num_items</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">(),</span>  <span class="c1"># Output is the reconstructed ratings vector</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">decoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">decoded</span>
+
+<span class="c1"># Example usage:</span>
+<span class="n">num_items</span> <span class="o">=</span> <span class="mi">1500</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Autoencoder</span><span class="p">(</span><span class="n">num_items</span><span class="p">)</span>
+
+<span class="c1"># Example input: a user rating vector (1500 items, some ratings missing)</span>
+<span class="n">user_ratings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">([</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="c1"># Forward pass</span>
+<span class="n">reconstructed_ratings</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">user_ratings</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="advantages-of-autoencoders">
+<h4><strong>Advantages of Autoencoders</strong>:<a class="headerlink" href="#advantages-of-autoencoders" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Dimensionality Reduction</strong>: Autoencoders reduce the dimensionality of the user-item matrix, making it easier to model complex interactions.</p></li>
+<li><p><strong>Filling Missing Values</strong>: Autoencoders are effective for filling in missing ratings in collaborative filtering systems.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="deep-learning-for-content-based-recommendations">
+<h3><strong>3. Deep Learning for Content-Based Recommendations</strong><a class="headerlink" href="#deep-learning-for-content-based-recommendations" title="Link to this heading">#</a></h3>
+<p>In content-based recommendation systems, deep learning models such as <strong>Convolutional Neural Networks (CNNs)</strong> and <strong>Recurrent Neural Networks (RNNs)</strong> are used to extract features from raw data like images, text, or audio to make recommendations.</p>
+<section id="id7">
+<h4><strong>How It Works</strong>:<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Feature Extraction</strong>: CNNs and RNNs are used to extract features from content (e.g., movie descriptions, user reviews, product images).</p></li>
+<li><p><strong>Content Matching</strong>: These extracted features are matched with the user’s profile or historical preferences to recommend similar items.</p></li>
+</ul>
+</section>
+<section id="id8">
+<h4><strong>Architecture</strong>:<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Text-Based Content</strong>: Use <strong>RNNs</strong> or <strong>Transformer-based models</strong> like <strong>BERT</strong> for text-based features (e.g., descriptions, reviews).</p></li>
+<li><p><strong>Image-Based Content</strong>: Use <strong>CNNs</strong> (e.g., <strong>ResNet</strong>) for image-based features (e.g., product images, movie posters).</p></li>
+</ul>
+</section>
+<section id="example-movie-recommendation-using-content-descriptions-and-user-ratings">
+<h4><strong>Example</strong>: Movie Recommendation Using Content Descriptions and User Ratings<a class="headerlink" href="#example-movie-recommendation-using-content-descriptions-and-user-ratings" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">BertTokenizer</span><span class="p">,</span> <span class="n">BertModel</span>
+
+<span class="c1"># Load a pre-trained BERT model for content-based text recommendations</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">BertTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">BertModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
+
+<span class="c1"># Example movie description</span>
+<span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;A young lion prince is cast out of his pride by his cruel uncle.&quot;</span>
+
+<span class="c1"># Tokenize and get the embeddings from BERT</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s1">&#39;pt&#39;</span><span class="p">)</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span>
+
+<span class="c1"># Get the pooled output for the entire description (text embedding)</span>
+<span class="n">text_embedding</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">pooler_output</span>
+</pre></div>
+</div>
+</section>
+<section id="advantages-of-content-based-deep-learning">
+<h4><strong>Advantages of Content-Based Deep Learning</strong>:<a class="headerlink" href="#advantages-of-content-based-deep-learning" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Rich Feature Representation</strong>: Deep learning models can extract complex, high-dimensional features from raw content (e.g., text, images).</p></li>
+<li><p><strong>Scalability</strong>: Can handle a large variety of data types, including text, images, and video.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="sequential-models-rnns-and-transformers">
+<h3><strong>4. Sequential Models (RNNs and Transformers)</strong><a class="headerlink" href="#sequential-models-rnns-and-transformers" title="Link to this heading">#</a></h3>
+<section id="id9">
+<h4><strong>Overview</strong>:<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<p>Sequential models like <strong>Recurrent Neural Networks (RNNs)</strong> and <strong>Transformers</strong> are used for session-based recommendations, where user interactions are modeled as sequences over time. These models are particularly effective in applications like <strong>next-item prediction</strong> (e.g., recommending the next song in a playlist or product in a session).</p>
+</section>
+<section id="id10">
+<h4><strong>How It Works</strong>:<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>RNNs/GRUs/LSTMs</strong>: Capture sequential patterns in user behavior by passing hidden states across time steps.</p></li>
+<li><p><strong>Transformers</strong>: Use self-attention mechanisms to model dependencies between user actions at different points in time, without needing sequential processing like RNNs.</p></li>
+</ul>
+</section>
+<section id="id11">
+<h4><strong>Architecture</strong>:<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Input</strong>: A sequence of user interactions (e.g., item IDs, timestamps).</p></li>
+<li><p><strong>RNN/Transformer Layers</strong>: Process the sequence to predict the next item</p></li>
+</ul>
+<p>the user is likely to interact with.</p>
+<ul class="simple">
+<li><p><strong>Output</strong>: A ranking of items for the next interaction.</p></li>
+</ul>
+</section>
+<section id="code-example-sequential-model-for-session-based-recommendation-using-rnns">
+<h4><strong>Code Example: Sequential Model for Session-Based Recommendation Using RNNs</strong><a class="headerlink" href="#code-example-sequential-model-for-session-based-recommendation-using-rnns" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RNNRecModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_items</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RNNRecModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">num_items</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GRU</span><span class="p">(</span><span class="n">embedding_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">num_items</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+        <span class="n">embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_embedding</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>  <span class="c1"># Embed the item sequence</span>
+        <span class="n">rnn_output</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span><span class="p">(</span><span class="n">embedded</span><span class="p">)</span>  <span class="c1"># Pass through RNN</span>
+        <span class="n">final_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">rnn_output</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>  <span class="c1"># Use the last output for prediction</span>
+        <span class="k">return</span> <span class="n">final_output</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">num_items</span> <span class="o">=</span> <span class="mi">1500</span>
+<span class="n">embedding_size</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">hidden_size</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RNNRecModel</span><span class="p">(</span><span class="n">num_items</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+
+<span class="c1"># Example sequence of item interactions</span>
+<span class="n">item_sequence</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]])</span>  <span class="c1"># User&#39;s interaction history</span>
+
+<span class="c1"># Forward pass to predict the next item</span>
+<span class="n">next_item_prediction</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">item_sequence</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="advantages-of-sequential-models">
+<h4><strong>Advantages of Sequential Models</strong>:<a class="headerlink" href="#advantages-of-sequential-models" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Captures Temporal Patterns</strong>: Sequential models can capture the order of user interactions, making them ideal for session-based recommendations.</p></li>
+<li><p><strong>Highly Accurate for Next-Item Prediction</strong>: Models like Transformers can learn complex temporal dependencies and provide highly accurate next-item predictions.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="advanced-techniques">
+<h3><strong>5. Advanced Techniques</strong><a class="headerlink" href="#advanced-techniques" title="Link to this heading">#</a></h3>
+<section id="factorization-machines-with-deep-learning-deepfm">
+<h4><strong>Factorization Machines with Deep Learning (DeepFM)</strong>:<a class="headerlink" href="#factorization-machines-with-deep-learning-deepfm" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Factorization Machines (FM)</strong> capture pairwise feature interactions. DeepFM extends this by combining factorization machines with deep neural networks to model both low-order and high-order interactions.</p></li>
+</ul>
+</section>
+<section id="attention-mechanisms">
+<h4><strong>Attention Mechanisms</strong>:<a class="headerlink" href="#attention-mechanisms" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Attention-based models</strong> can be used to focus on important features or user interactions, improving the recommendation quality. <strong>Self-attention</strong> (used in Transformers) allows the model to weigh different items in a sequence differently, depending on their importance.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="conclusion">
+<h3><strong>Conclusion</strong><a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
+<p>Deep learning-based approaches have significantly improved recommendation systems by enabling models to capture more complex user-item interactions, learn from various data types (e.g., text, images, sequences), and model dynamic user behavior. Techniques such as <strong>Neural Collaborative Filtering (NCF)</strong>, <strong>Autoencoders</strong>, <strong>RNNs</strong>, and <strong>Transformers</strong> offer flexible and scalable solutions for various recommendation tasks.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Image%20processing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Machine Learning Methods in Image Processing</strong></p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-recommendation-systems"><strong>1. Types of Recommendation Systems</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filtering-cf"><strong>1.1. Collaborative Filtering (CF)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#content-based-filtering"><strong>1.2. Content-Based Filtering</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-recommendation-systems"><strong>1.3. Hybrid Recommendation Systems</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#knowledge-based-systems"><strong>1.4. Knowledge-Based Systems</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#popular-algorithms-and-techniques"><strong>2. Popular Algorithms and Techniques</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filtering"><strong>2.1. Collaborative Filtering</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>2.2. Content-Based Filtering</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-methods"><strong>2.3. Hybrid Methods</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-approaches"><strong>2.4. Deep Learning Approaches</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics-for-recommendation-systems"><strong>3. Evaluation Metrics for Recommendation Systems</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-building-a-movie-recommendation-system"><strong>4. Project: Building a Movie Recommendation System</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-solution"><strong>Step-by-Step Solution</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing"><strong>1. Data Preprocessing</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis-eda"><strong>2. Exploratory Data Analysis (EDA)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-factorization-using-svd-singular-value-decomposition"><strong>3. Matrix Factorization using SVD (Singular Value Decomposition)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-the-recommendation-system"><strong>4. Implementing the Recommendation System</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation"><strong>5. Evaluation</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-techniques-in-recommendation-systems"><strong>5. Advanced Techniques in Recommendation Systems</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-collaborative-filtering-ncf"><strong>1. Neural Collaborative Filtering (NCF)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autoencoders-for-collaborative-filtering"><strong>2. Autoencoders for Collaborative Filtering</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sequence-based-and-context-aware-recommendations"><strong>3. Sequence-Based and Context-Aware Recommendations</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-systems"><strong>4. Hybrid Systems</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-hybrid-recommendation-system-collaborative-content-based"><strong>Example: Hybrid Recommendation System (Collaborative + Content-Based)</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-based-approaches-for-recommendation-systems">6. <strong>Deep Learning-Based Approaches for Recommendation Systems</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>1. Neural Collaborative Filtering (NCF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#overview"><strong>Overview</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works"><strong>How It Works</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#architecture"><strong>Architecture</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-neural-collaborative-filtering-in-pytorch"><strong>Code Example: Neural Collaborative Filtering in PyTorch</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-ncf"><strong>Advantages of NCF</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>2. Autoencoders for Collaborative Filtering</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>Overview</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><strong>How It Works</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>Architecture</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-autoencoder-for-collaborative-filtering"><strong>Code Example: Autoencoder for Collaborative Filtering</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-autoencoders"><strong>Advantages of Autoencoders</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-for-content-based-recommendations"><strong>3. Deep Learning for Content-Based Recommendations</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><strong>How It Works</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><strong>Architecture</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-movie-recommendation-using-content-descriptions-and-user-ratings"><strong>Example</strong>: Movie Recommendation Using Content Descriptions and User Ratings</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-content-based-deep-learning"><strong>Advantages of Content-Based Deep Learning</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sequential-models-rnns-and-transformers"><strong>4. Sequential Models (RNNs and Transformers)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><strong>Overview</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10"><strong>How It Works</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11"><strong>Architecture</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example-sequential-model-for-session-based-recommendation-using-rnns"><strong>Code Example: Sequential Model for Session-Based Recommendation Using RNNs</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-sequential-models"><strong>Advantages of Sequential Models</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-techniques"><strong>5. Advanced Techniques</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#factorization-machines-with-deep-learning-deepfm"><strong>Factorization Machines with Deep Learning (DeepFM)</strong>:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#attention-mechanisms"><strong>Attention Mechanisms</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><strong>Conclusion</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Qiang Hu, AI assistant
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
