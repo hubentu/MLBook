@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Core ML concepts';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Model Optimization" href="Model%20Optimization.html" />
+    <link rel="next" title="Machine Learning Methods" href="ML%20methods.html" />
     <link rel="prev" title="Machine Learning notebook" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -181,9 +181,13 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Core Machine Learning Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ML%20methods.html"><strong>Machine Learning Methods</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Deep%20Learning.html">Neural Networks and Deep Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Model%20Optimization.html">Model Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mixed%20Precision%20and%20Quantization.html">Mixed Precision Training and Quantization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="system%20design.html">System Design for Machine Learning Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LLM.html">Large Language Models (LLMs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Image%20processing.html"><strong>Machine Learning Methods in Image Processing</strong></a></li>
 </ul>
 
     </div>
@@ -379,6 +383,44 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-unsupervised-and-reinforcement-learning">1. <strong>Supervised, Unsupervised, and Reinforcement Learning</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-learning"><strong>Supervised Learning</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupervised-learning"><strong>Unsupervised Learning</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reinforcement-learning"><strong>Reinforcement Learning</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-evaluation-metrics">2. <strong>Model Evaluation Metrics</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-metrics"><strong>Classification Metrics:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-metrics"><strong>Regression Metrics:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">3. <strong>Bias-Variance Tradeoff</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias"><strong>Bias:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance"><strong>Variance:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Bias-Variance Tradeoff:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization-techniques">4. <strong>Regularization Techniques</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#l1-regularization-lasso"><strong>L1 Regularization (Lasso):</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#l2-regularization-ridge"><strong>L2 Regularization (Ridge):</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#elastic-net"><strong>Elastic Net:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-algorithms">5. <strong>Optimization Algorithms</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent"><strong>Gradient Descent:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adam-optimizer-adaptive-moment-estimation"><strong>Adam Optimizer (Adaptive Moment Estimation):</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">6. <strong>Cross-Validation</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-fold-cross-validation"><strong>K-Fold Cross-Validation:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leave-one-out-cross-validation-loo"><strong>Leave-One-Out Cross-Validation (LOO):</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overfitting-and-underfitting">7. <strong>Overfitting and Underfitting</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overfitting"><strong>Overfitting:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#underfitting"><strong>Underfitting:</strong></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-supervised-learning-basics">Question 1: Supervised Learning Basics</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">Data Preparation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-selection">Model Selection</a></li>
@@ -405,6 +447,20 @@ document.write(`
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-overfitting">Handling Overfitting</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#addressing-underestimation-in-model-predictions">Addressing Underestimation in Model Predictions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-how-would-you-handle-an-imbalanced-dataset-for-a-binary-classification-problem"><strong>Question 1: How would you handle an imbalanced dataset for a binary classification problem?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-explain-how-you-would-handle-missing-data-in-a-dataset-what-approaches-would-you-take"><strong>Question 2: Explain how you would handle missing data in a dataset. What approaches would you take?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-how-would-you-build-a-recommendation-system-for-a-movie-streaming-service-like-netflix"><strong>Question 3: How would you build a recommendation system for a movie streaming service like Netflix?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-explain-the-difference-between-l1-and-l2-regularization-in-what-scenarios-would-you-use-each"><strong>Question 4: Explain the difference between L1 and L2 regularization. In what scenarios would you use each?</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>L1 Regularization (Lasso):</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>L2 Regularization (Ridge):</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>Elastic Net:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-describe-how-you-would-detect-overfitting-in-a-machine-learning-model-and-prevent-it"><strong>Question 5: Describe how you would detect overfitting in a machine learning model and prevent it.</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-detect-overfitting"><strong>How to Detect Overfitting:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-prevent-overfitting"><strong>How to Prevent Overfitting:</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -421,6 +477,210 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="core-machine-learning-concepts">
 <h1>Core Machine Learning Concepts<a class="headerlink" href="#core-machine-learning-concepts" title="Link to this heading">#</a></h1>
 <p>To begin, let’s make sure you’re comfortable with the core machine learning concepts that are fundamental for any machine learning engineering role. This includes understanding different types of machine learning, model evaluation metrics, and optimization techniques.</p>
+<section id="supervised-unsupervised-and-reinforcement-learning">
+<h2>1. <strong>Supervised, Unsupervised, and Reinforcement Learning</strong><a class="headerlink" href="#supervised-unsupervised-and-reinforcement-learning" title="Link to this heading">#</a></h2>
+<section id="supervised-learning">
+<h3><strong>Supervised Learning</strong><a class="headerlink" href="#supervised-learning" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Definition:</strong> In supervised learning, the algorithm learns from a labeled dataset, meaning each training example is paired with an output label. The goal is to learn a mapping from input features to the output label.</p></li>
+<li><p><strong>Common Algorithms:</strong></p>
+<ul>
+<li><p><strong>Linear/Logistic Regression</strong></p></li>
+<li><p><strong>Decision Trees</strong></p></li>
+<li><p><strong>Support Vector Machines (SVMs)</strong></p></li>
+<li><p><strong>Neural Networks</strong></p></li>
+</ul>
+</li>
+<li><p><strong>Real-World Example:</strong></p>
+<ul>
+<li><p>Predicting house prices based on features such as size, location, and number of bedrooms (Regression).</p></li>
+<li><p>Classifying whether an email is spam or not (Classification).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="unsupervised-learning">
+<h3><strong>Unsupervised Learning</strong><a class="headerlink" href="#unsupervised-learning" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Definition:</strong> The model learns patterns from an unlabeled dataset, where there are no explicit outputs provided. The goal is often to find hidden structures in the data.</p></li>
+<li><p><strong>Common Algorithms:</strong></p>
+<ul>
+<li><p><strong>K-means Clustering</strong></p></li>
+<li><p><strong>Principal Component Analysis (PCA)</strong></p></li>
+<li><p><strong>Hierarchical Clustering</strong></p></li>
+</ul>
+</li>
+<li><p><strong>Real-World Example:</strong></p>
+<ul>
+<li><p>Grouping customers based on purchasing behavior for targeted marketing (Clustering).</p></li>
+<li><p>Dimensionality reduction for visualizing high-dimensional data (PCA).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="reinforcement-learning">
+<h3><strong>Reinforcement Learning</strong><a class="headerlink" href="#reinforcement-learning" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Definition:</strong> An agent learns by interacting with an environment, receiving rewards or penalties for its actions. The goal is to learn a policy that maximizes cumulative reward.</p></li>
+<li><p><strong>Common Algorithms:</strong></p>
+<ul>
+<li><p><strong>Q-Learning</strong></p></li>
+<li><p><strong>Deep Q Networks (DQN)</strong></p></li>
+<li><p><strong>Proximal Policy Optimization (PPO)</strong></p></li>
+</ul>
+</li>
+<li><p><strong>Real-World Example:</strong></p>
+<ul>
+<li><p>Teaching a robot to walk by giving it positive reinforcement when it moves correctly.</p></li>
+<li><p>Training a model to play games like chess or Go (AlphaGo).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="model-evaluation-metrics">
+<h2>2. <strong>Model Evaluation Metrics</strong><a class="headerlink" href="#model-evaluation-metrics" title="Link to this heading">#</a></h2>
+<section id="classification-metrics">
+<h3><strong>Classification Metrics:</strong><a class="headerlink" href="#classification-metrics" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Accuracy:</strong> Percentage of correct predictions over total predictions.</p></li>
+<li><p><strong>Precision:</strong> The proportion of true positives among all positive predictions.</p></li>
+<li><p><strong>Recall:</strong> The proportion of true positives among all actual positives.</p></li>
+<li><p><strong>F1 Score:</strong> The harmonic mean of precision and recall, used when there is an uneven class distribution.</p></li>
+<li><p><strong>ROC-AUC (Receiver Operating Characteristic - Area Under Curve):</strong> A measure of a model’s ability to distinguish between classes.</p></li>
+</ul>
+</section>
+<section id="regression-metrics">
+<h3><strong>Regression Metrics:</strong><a class="headerlink" href="#regression-metrics" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Mean Absolute Error (MAE):</strong> The average of absolute differences between predicted and actual values.</p></li>
+<li><p><strong>Mean Squared Error (MSE):</strong> The average of the squared differences between predicted and actual values.</p></li>
+<li><p><strong>R² (Coefficient of Determination):</strong> How well the regression line explains the variance in the data.</p></li>
+</ul>
+</section>
+</section>
+<section id="bias-variance-tradeoff">
+<h2>3. <strong>Bias-Variance Tradeoff</strong><a class="headerlink" href="#bias-variance-tradeoff" title="Link to this heading">#</a></h2>
+<section id="bias">
+<h3><strong>Bias:</strong><a class="headerlink" href="#bias" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Error due to the model being too simple and unable to capture the underlying patterns in the data (underfitting).</p></li>
+</ul>
+</section>
+<section id="variance">
+<h3><strong>Variance:</strong><a class="headerlink" href="#variance" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Error due to the model being too complex and capturing noise in the training data (overfitting).</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3><strong>Bias-Variance Tradeoff:</strong><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Goal:</strong> Achieve a balance between bias and variance to minimize total error.</p></li>
+<li><p><strong>Solutions:</strong></p>
+<ul>
+<li><p><strong>For high bias:</strong> Increase model complexity (e.g., adding more features, using a more sophisticated model).</p></li>
+<li><p><strong>For high variance:</strong> Regularization (L1, L2), cross-validation, or reducing model complexity.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="regularization-techniques">
+<h2>4. <strong>Regularization Techniques</strong><a class="headerlink" href="#regularization-techniques" title="Link to this heading">#</a></h2>
+<section id="l1-regularization-lasso">
+<h3><strong>L1 Regularization (Lasso):</strong><a class="headerlink" href="#l1-regularization-lasso" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Adds a penalty proportional to the absolute value of the coefficients.</p></li>
+<li><p><strong>Effect:</strong> Drives some feature coefficients to zero, effectively performing feature selection.</p></li>
+</ul>
+</section>
+<section id="l2-regularization-ridge">
+<h3><strong>L2 Regularization (Ridge):</strong><a class="headerlink" href="#l2-regularization-ridge" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Adds a penalty proportional to the square of the coefficients.</p></li>
+<li><p><strong>Effect:</strong> Shrinks the magnitude of the coefficients but does not eliminate any features.</p></li>
+</ul>
+</section>
+<section id="elastic-net">
+<h3><strong>Elastic Net:</strong><a class="headerlink" href="#elastic-net" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A combination of L1 and L2 regularization.</p></li>
+<li><p><strong>Effect:</strong> Provides both shrinkage and feature selection.</p></li>
+</ul>
+</section>
+</section>
+<section id="optimization-algorithms">
+<h2>5. <strong>Optimization Algorithms</strong><a class="headerlink" href="#optimization-algorithms" title="Link to this heading">#</a></h2>
+<section id="gradient-descent">
+<h3><strong>Gradient Descent:</strong><a class="headerlink" href="#gradient-descent" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Definition:</strong> An iterative optimization algorithm used to minimize a loss function by updating model parameters in the opposite direction of the gradient.</p></li>
+<li><p><strong>Variants:</strong></p>
+<ul>
+<li><p><strong>Batch Gradient Descent:</strong> Uses the entire dataset to compute gradients at each step.</p></li>
+<li><p><strong>Stochastic Gradient Descent (SGD):</strong> Uses a single data point at each step, faster but noisier.</p></li>
+<li><p><strong>Mini-batch Gradient Descent:</strong> A compromise, using a small batch of data points.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="adam-optimizer-adaptive-moment-estimation">
+<h3><strong>Adam Optimizer (Adaptive Moment Estimation):</strong><a class="headerlink" href="#adam-optimizer-adaptive-moment-estimation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Combines the advantages of AdaGrad and RMSProp, adapting the learning rate for each parameter.</p></li>
+<li><p>Widely used in deep learning due to its faster convergence and better performance in sparse gradients.</p></li>
+</ul>
+</section>
+</section>
+<section id="cross-validation">
+<h2>6. <strong>Cross-Validation</strong><a class="headerlink" href="#cross-validation" title="Link to this heading">#</a></h2>
+<section id="k-fold-cross-validation">
+<h3><strong>K-Fold Cross-Validation:</strong><a class="headerlink" href="#k-fold-cross-validation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Definition:</strong> The data is split into K subsets, and the model is trained K times, each time using a different subset as the validation set and the others for training.</p></li>
+<li><p><strong>Purpose:</strong> To prevent overfitting and give a more reliable estimate of model performance.</p></li>
+</ul>
+</section>
+<section id="leave-one-out-cross-validation-loo">
+<h3><strong>Leave-One-Out Cross-Validation (LOO):</strong><a class="headerlink" href="#leave-one-out-cross-validation-loo" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Similar to K-fold, but K is set to the number of data points. Each data point is used once as the validation set.</p></li>
+</ul>
+</section>
+</section>
+<section id="overfitting-and-underfitting">
+<h2>7. <strong>Overfitting and Underfitting</strong><a class="headerlink" href="#overfitting-and-underfitting" title="Link to this heading">#</a></h2>
+<section id="overfitting">
+<h3><strong>Overfitting:</strong><a class="headerlink" href="#overfitting" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A model performs well on training data but poorly on unseen data.</p></li>
+<li><p><strong>Causes:</strong> Too complex models, too many parameters, insufficient training data.</p></li>
+<li><p><strong>Solutions:</strong></p>
+<ul>
+<li><p>Cross-validation</p></li>
+<li><p>Regularization</p></li>
+<li><p>Simplifying the model</p></li>
+<li><p>Early stopping in neural networks</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="underfitting">
+<h3><strong>Underfitting:</strong><a class="headerlink" href="#underfitting" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A model is too simple to capture the underlying structure of the data.</p></li>
+<li><p><strong>Causes:</strong> Model too simple, insufficient features, poor training.</p></li>
+<li><p><strong>Solutions:</strong></p>
+<ul>
+<li><p>Increase model complexity</p></li>
+<li><p>Add more features</p></li>
+<li><p>Use a more sophisticated model</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
 <section id="question-1-supervised-learning-basics">
 <h2>Question 1: Supervised Learning Basics<a class="headerlink" href="#question-1-supervised-learning-basics" title="Link to this heading">#</a></h2>
 <p>Scenario:
@@ -609,6 +869,217 @@ Additional Approaches:</p></li>
 <li><p>Adjusting the Loss Function: If the model consistently underestimates, you might modify the loss function to penalize underestimates more than overestimates, though this requires careful consideration to avoid introducing new biases.</p></li>
 </ul>
 </section>
+<hr class="docutils" />
+<section id="question-1-how-would-you-handle-an-imbalanced-dataset-for-a-binary-classification-problem">
+<h3><strong>Question 1: How would you handle an imbalanced dataset for a binary classification problem?</strong><a class="headerlink" href="#question-1-how-would-you-handle-an-imbalanced-dataset-for-a-binary-classification-problem" title="Link to this heading">#</a></h3>
+<p><strong>Answer:</strong>
+Imbalanced datasets are common in real-world applications, like fraud detection or medical diagnoses, where one class significantly outweighs the other. The key problem is that standard classifiers tend to get biased towards the majority class, leading to poor performance on the minority class.</p>
+<p>Here are some techniques to handle this issue:</p>
+<ol class="arabic simple">
+<li><p><strong>Resampling the dataset:</strong></p>
+<ul class="simple">
+<li><p><strong>Undersampling the majority class:</strong> This involves reducing the number of examples from the majority class to balance the dataset. The downside is the potential loss of useful information.</p></li>
+<li><p><strong>Oversampling the minority class:</strong> This involves creating duplicate copies or slight variations of the minority class examples (e.g., using SMOTE – Synthetic Minority Over-sampling Technique). This helps but can increase the chances of overfitting.</p></li>
+</ul>
+</li>
+<li><p><strong>Using different evaluation metrics:</strong></p>
+<ul class="simple">
+<li><p>When the dataset is imbalanced, accuracy may not be the best metric to evaluate model performance. Instead, metrics like <strong>precision</strong>, <strong>recall</strong>, <strong>F1 score</strong>, and <strong>ROC-AUC</strong> are more informative.</p></li>
+<li><p><strong>Precision</strong>: Useful when false positives are costly (e.g., fraud detection).</p></li>
+<li><p><strong>Recall</strong>: Useful when false negatives are more dangerous (e.g., medical diagnosis).</p></li>
+</ul>
+</li>
+<li><p><strong>Using class weights:</strong></p>
+<ul class="simple">
+<li><p>Many ML models (e.g., in logistic regression or SVMs) allow you to assign a higher penalty to misclassifications of the minority class by adjusting the class weights. This way, the model puts more focus on the minority class.</p></li>
+<li><p>In neural networks, you can achieve this by adjusting the loss function to penalize mistakes on the minority class more heavily.</p></li>
+</ul>
+</li>
+<li><p><strong>Anomaly Detection Algorithms:</strong></p>
+<ul class="simple">
+<li><p>In cases where the minority class represents outliers or rare events (e.g., fraud detection), anomaly detection algorithms like Isolation Forest or One-Class SVM can be used instead of standard classifiers.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Example:</strong> For a fraud detection problem where fraudulent transactions are rare (e.g., 1%), you could start by using SMOTE to oversample the minority class and then train a Random Forest classifier. Use recall and precision as the key metrics to avoid false positives (flagging normal transactions as fraud) and false negatives (missing fraudulent transactions).</p>
+</section>
+<hr class="docutils" />
+<section id="question-2-explain-how-you-would-handle-missing-data-in-a-dataset-what-approaches-would-you-take">
+<h3><strong>Question 2: Explain how you would handle missing data in a dataset. What approaches would you take?</strong><a class="headerlink" href="#question-2-explain-how-you-would-handle-missing-data-in-a-dataset-what-approaches-would-you-take" title="Link to this heading">#</a></h3>
+<p><strong>Answer:</strong>
+Handling missing data is a critical step in data preprocessing since most ML algorithms cannot handle missing values directly.</p>
+<p>Here are common techniques for dealing with missing data:</p>
+<ol class="arabic simple">
+<li><p><strong>Remove rows or columns:</strong></p>
+<ul class="simple">
+<li><p><strong>Removing rows with missing values:</strong> If the percentage of missing data is small (e.g., less than 5% of the dataset), dropping the rows may be a quick and easy solution.</p></li>
+<li><p><strong>Removing columns:</strong> If an entire column has a significant percentage of missing values (e.g., more than 40-50%), removing the feature might be reasonable, as it won’t contribute much to the model.</p></li>
+</ul>
+</li>
+<li><p><strong>Imputation:</strong></p>
+<ul class="simple">
+<li><p><strong>Mean/Median/Mode Imputation:</strong> For numerical features, replace missing values with the mean or median of the column. For categorical data, you can replace missing values with the most frequent category (mode).</p></li>
+<li><p><strong>K-Nearest Neighbors (KNN) Imputation:</strong> This method replaces missing values with the mean or mode of the nearest neighbors in the dataset. It’s more accurate than mean/median imputation, especially when the data has a relationship with other variables.</p></li>
+<li><p><strong>Multivariate Imputation by Chained Equations (MICE):</strong> This technique uses other features to predict the missing values by building a model for each missing feature and iteratively refining the predictions.</p></li>
+</ul>
+</li>
+<li><p><strong>Predictive Imputation:</strong></p>
+<ul class="simple">
+<li><p>Build a machine learning model (e.g., Random Forest, XGBoost) to predict the missing values based on the available data.</p></li>
+</ul>
+</li>
+<li><p><strong>Indicator Variable for Missingness:</strong></p>
+<ul class="simple">
+<li><p>Add a new binary column to indicate whether a value was missing or not. This allows the model to consider whether missingness itself carries some information.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Example:</strong> For a dataset containing customer data where some entries have missing income values, you might use median imputation for the income column if the missing values are random. If they are systematically missing (e.g., only high-income customers fail to report), you might apply predictive modeling using other features like age, location, and employment status.</p>
+</section>
+<hr class="docutils" />
+<section id="question-3-how-would-you-build-a-recommendation-system-for-a-movie-streaming-service-like-netflix">
+<h3><strong>Question 3: How would you build a recommendation system for a movie streaming service like Netflix?</strong><a class="headerlink" href="#question-3-how-would-you-build-a-recommendation-system-for-a-movie-streaming-service-like-netflix" title="Link to this heading">#</a></h3>
+<p><strong>Answer:</strong>
+To build a recommendation system, you can approach the problem using several strategies:</p>
+<ol class="arabic simple">
+<li><p><strong>Collaborative Filtering:</strong></p>
+<ul class="simple">
+<li><p><strong>User-based Collaborative Filtering:</strong> Here, you recommend movies to a user based on what similar users have liked. You compute the similarity between users (using metrics like cosine similarity or Pearson correlation) and recommend items liked by the most similar users.</p></li>
+<li><p><strong>Item-based Collaborative Filtering:</strong> Instead of focusing on users, this method focuses on finding similar items (movies in this case). If a user liked movie A, and movie B is similar to A (in terms of the users who watched them), then recommend movie B.</p></li>
+<li><p><strong>Matrix Factorization (e.g., Singular Value Decomposition – SVD):</strong> This technique reduces the high-dimensional matrix of users and movies to a lower-dimensional representation by learning latent factors that explain user preferences and movie characteristics. This is widely used for personalized recommendations.</p></li>
+</ul>
+</li>
+<li><p><strong>Content-Based Filtering:</strong></p>
+<ul class="simple">
+<li><p>In this method, recommendations are based on the content (features) of the items themselves. For movies, features like genres, actors, directors, and plot summaries can be used to make recommendations. For example, if a user likes action movies, the system can recommend more action movies.</p></li>
+</ul>
+</li>
+<li><p><strong>Hybrid Approach:</strong></p>
+<ul class="simple">
+<li><p>A combination of collaborative and content-based filtering often works best. The hybrid system can recommend based on user preferences (collaborative filtering) and suggest similar content (content-based filtering).</p></li>
+</ul>
+</li>
+<li><p><strong>Deep Learning:</strong></p>
+<ul class="simple">
+<li><p><strong>Neural Collaborative Filtering (NCF):</strong> A neural network-based approach that learns user-item interaction patterns through embedding layers. NCF can capture non-linear relationships and complex patterns in user behavior.</p></li>
+<li><p><strong>Recurrent Neural Networks (RNNs) for Sequential Recommendations:</strong> If you want to incorporate the order in which users consume content (e.g., watching movies in a sequence), RNNs or LSTMs can be used to model user sequences.</p></li>
+</ul>
+</li>
+<li><p><strong>Cold Start Problem:</strong></p>
+<ul class="simple">
+<li><p>When a new user or movie enters the system, there’s not enough data to make accurate recommendations. To address this, we can:</p>
+<ul>
+<li><p>Use content-based filtering initially (based on movie metadata or user preferences).</p></li>
+<li><p>Incorporate user demographic data (e.g., age, location) to make initial guesses.</p></li>
+<li><p>Use hybrid methods that combine collaborative filtering with content-based features.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>Example:</strong> A system might start with content-based filtering, recommending movies based on the genre the user typically watches. As more user data is collected (e.g., ratings or likes), the system shifts to collaborative filtering. The platform could also leverage matrix factorization to handle large-scale data efficiently, combined with embeddings learned via a deep learning model.</p>
+</section>
+<hr class="docutils" />
+<section id="question-4-explain-the-difference-between-l1-and-l2-regularization-in-what-scenarios-would-you-use-each">
+<h3><strong>Question 4: Explain the difference between L1 and L2 regularization. In what scenarios would you use each?</strong><a class="headerlink" href="#question-4-explain-the-difference-between-l1-and-l2-regularization-in-what-scenarios-would-you-use-each" title="Link to this heading">#</a></h3>
+<p><strong>Answer:</strong>
+L1 and L2 regularization are techniques to prevent overfitting in machine learning models by adding a penalty to the loss function based on the magnitude of the coefficients (weights).</p>
+<section id="id2">
+<h4><strong>L1 Regularization (Lasso):</strong><a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Definition:</strong> L1 regularization adds a penalty equal to the absolute value of the coefficients to the loss function.</p>
+<ul>
+<li><p>Loss function: ( \text{Loss} = \text{MSE} + \lambda \sum |w_i| )</p></li>
+</ul>
+</li>
+<li><p><strong>Effect:</strong> L1 regularization can drive some coefficients to exactly zero, which leads to sparse models and effectively performs feature selection. This makes it useful when you expect that only a small subset of features are important.</p></li>
+</ul>
+<p><strong>When to use L1:</strong> Use L1 when you have a large number of features and suspect that only a small number of them are significant. It’s also beneficial when you need an interpretable model that emphasizes the most important features.</p>
+</section>
+<section id="id3">
+<h4><strong>L2 Regularization (Ridge):</strong><a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Definition:</strong> L2 regularization adds a penalty equal to the square of the coefficients.</p>
+<ul>
+<li><p>Loss function: ( \text{Loss} = \text{MSE} + \lambda \sum w_i^2 )</p></li>
+</ul>
+</li>
+<li><p><strong>Effect:</strong> L2 regularization shrinks all the coefficients towards zero but does not eliminate any. It helps to reduce the complexity of the model without necessarily discarding any features.</p></li>
+</ul>
+<p><strong>When to use L2:</strong> Use L2 regularization when you believe most features are relevant but need to reduce overfitting and improve generalization.</p>
+</section>
+<section id="id4">
+<h4><strong>Elastic Net:</strong><a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Definition:</strong> A combination of L1 and L2 regularization that can handle both sparse features (L1) and all relevant features (L2).</p></li>
+</ul>
+<p><strong>When to use Elastic Net:</strong> When you want the benefits of both L1 (feature selection) and L2 (regularization for all features), particularly when you have highly correlated variables.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="question-5-describe-how-you-would-detect-overfitting-in-a-machine-learning-model-and-prevent-it">
+<h3><strong>Question 5: Describe how you would detect overfitting in a machine learning model and prevent it.</strong><a class="headerlink" href="#question-5-describe-how-you-would-detect-overfitting-in-a-machine-learning-model-and-prevent-it" title="Link to this heading">#</a></h3>
+<p><strong>Answer:</strong>
+<strong>Overfitting</strong> occurs when a model performs well on training data but poorly on unseen test data, meaning it has learned noise and spurious patterns in the training data rather than generalizable features</p>
+<p>.</p>
+<section id="how-to-detect-overfitting">
+<h4><strong>How to Detect Overfitting:</strong><a class="headerlink" href="#how-to-detect-overfitting" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p><strong>Performance on Validation/Test Data:</strong></p>
+<ul class="simple">
+<li><p>Overfitting can be detected when the training accuracy is significantly higher than the validation/test accuracy.</p></li>
+<li><p>Plotting learning curves for both training and validation accuracy can give insights into whether the model has overfitted.</p></li>
+</ul>
+</li>
+<li><p><strong>Cross-Validation:</strong></p>
+<ul class="simple">
+<li><p>Overfitting can also be detected by performing k-fold cross-validation and observing if the model performs consistently across different folds.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="how-to-prevent-overfitting">
+<h4><strong>How to Prevent Overfitting:</strong><a class="headerlink" href="#how-to-prevent-overfitting" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p><strong>Regularization:</strong></p>
+<ul class="simple">
+<li><p>Use <strong>L1</strong> or <strong>L2 regularization</strong> to penalize large weights, which forces the model to learn simpler representations.</p></li>
+</ul>
+</li>
+<li><p><strong>Cross-Validation:</strong></p>
+<ul class="simple">
+<li><p>Use techniques like <strong>k-fold cross-validation</strong> to ensure that the model generalizes well to unseen data.</p></li>
+</ul>
+</li>
+<li><p><strong>Pruning Decision Trees (For Tree-based Models):</strong></p>
+<ul class="simple">
+<li><p>In models like decision trees, pruning techniques can be used to limit tree depth and prevent the model from capturing noise in the training data.</p></li>
+</ul>
+</li>
+<li><p><strong>Early Stopping (For Neural Networks):</strong></p>
+<ul class="simple">
+<li><p>During training, monitor the validation error. If the validation error starts to increase while the training error decreases, stop training early to prevent overfitting.</p></li>
+</ul>
+</li>
+<li><p><strong>Dropout (For Neural Networks):</strong></p>
+<ul class="simple">
+<li><p>Randomly drop a subset of neurons during training to prevent the model from co-adapting too much to the training data. This is particularly useful in deep networks.</p></li>
+</ul>
+</li>
+<li><p><strong>Data Augmentation (For Image Data):</strong></p>
+<ul class="simple">
+<li><p>For image data, techniques like rotation, flipping, and scaling artificially increase the dataset size, which helps improve model generalization and reduces overfitting.</p></li>
+</ul>
+</li>
+<li><p><strong>Reduce Model Complexity:</strong></p>
+<ul class="simple">
+<li><p>Simplify the model by reducing the number of parameters (e.g., fewer layers or neurons in a neural network) to make it less likely to overfit the training data.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Example:</strong> For a neural network that’s overfitting on image data, you could apply dropout with a probability of 0.5 and use data augmentation techniques like random flips and rotations to increase the diversity of the training data.</p>
+</section>
+</section>
 </section>
 </section>
 
@@ -652,11 +1123,11 @@ Additional Approaches:</p></li>
       </div>
     </a>
     <a class="right-next"
-       href="Model%20Optimization.html"
+       href="ML%20methods.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Model Optimization</p>
+        <p class="prev-next-title"><strong>Machine Learning Methods</strong></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -676,6 +1147,44 @@ Additional Approaches:</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-unsupervised-and-reinforcement-learning">1. <strong>Supervised, Unsupervised, and Reinforcement Learning</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-learning"><strong>Supervised Learning</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupervised-learning"><strong>Unsupervised Learning</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reinforcement-learning"><strong>Reinforcement Learning</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-evaluation-metrics">2. <strong>Model Evaluation Metrics</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-metrics"><strong>Classification Metrics:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-metrics"><strong>Regression Metrics:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">3. <strong>Bias-Variance Tradeoff</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias"><strong>Bias:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance"><strong>Variance:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Bias-Variance Tradeoff:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization-techniques">4. <strong>Regularization Techniques</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#l1-regularization-lasso"><strong>L1 Regularization (Lasso):</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#l2-regularization-ridge"><strong>L2 Regularization (Ridge):</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#elastic-net"><strong>Elastic Net:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-algorithms">5. <strong>Optimization Algorithms</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent"><strong>Gradient Descent:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adam-optimizer-adaptive-moment-estimation"><strong>Adam Optimizer (Adaptive Moment Estimation):</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">6. <strong>Cross-Validation</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-fold-cross-validation"><strong>K-Fold Cross-Validation:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leave-one-out-cross-validation-loo"><strong>Leave-One-Out Cross-Validation (LOO):</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overfitting-and-underfitting">7. <strong>Overfitting and Underfitting</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overfitting"><strong>Overfitting:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#underfitting"><strong>Underfitting:</strong></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-supervised-learning-basics">Question 1: Supervised Learning Basics</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">Data Preparation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-selection">Model Selection</a></li>
@@ -702,6 +1211,20 @@ Additional Approaches:</p></li>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-overfitting">Handling Overfitting</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#addressing-underestimation-in-model-predictions">Addressing Underestimation in Model Predictions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-how-would-you-handle-an-imbalanced-dataset-for-a-binary-classification-problem"><strong>Question 1: How would you handle an imbalanced dataset for a binary classification problem?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-explain-how-you-would-handle-missing-data-in-a-dataset-what-approaches-would-you-take"><strong>Question 2: Explain how you would handle missing data in a dataset. What approaches would you take?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-how-would-you-build-a-recommendation-system-for-a-movie-streaming-service-like-netflix"><strong>Question 3: How would you build a recommendation system for a movie streaming service like Netflix?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-explain-the-difference-between-l1-and-l2-regularization-in-what-scenarios-would-you-use-each"><strong>Question 4: Explain the difference between L1 and L2 regularization. In what scenarios would you use each?</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>L1 Regularization (Lasso):</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><strong>L2 Regularization (Ridge):</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>Elastic Net:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-5-describe-how-you-would-detect-overfitting-in-a-machine-learning-model-and-prevent-it"><strong>Question 5: Describe how you would detect overfitting in a machine learning model and prevent it.</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-detect-overfitting"><strong>How to Detect Overfitting:</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-prevent-overfitting"><strong>How to Prevent Overfitting:</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
